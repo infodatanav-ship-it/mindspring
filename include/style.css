@@ -1,0 +1,426 @@
+; $Id: style.css,v 1.8 2009/03/25 11:35:14 etienne Exp $
+
+body {
+	font-family:  arial, helvetica,  sans-serif;
+	font-size: small;
+	margin-left: 0;
+	margin-bottom: 0;
+	margin-right: 0;
+	margin-top: 0;
+}
+
+
+A:link, A:visited { 
+	color:black; #333399;
+
+}    	
+						
+A:hover {
+	color: red;
+}
+A:active {
+	color: #ff0000;
+}
+
+h1 {
+  border-style: solid;
+  border-width: 0 0 2px 0;
+  border-color: #3333CC;
+  padding: 3px;
+  margin: 0px;
+  font-size: large;
+  text-align: right;
+  font-weight: bold;
+  color: white;
+  /* background-color:green; #red*/
+   background-color:red;
+} 
+
+h2 {
+  font-weight: bold;
+  font-size: 12px;
+  color: #333399;
+} 
+
+.links {
+	font-size: bigger;
+	text-align: center;
+	font-weight: bold;
+}
+
+.ad {
+  border-style: solid;
+ 	border-width: 2px 0 0 0 ;
+ 	border-color: #3333CC;
+	text-align: right;
+	background-color: #3333CC;
+	color: white;
+}	
+
+.footer {
+  border-style: solid;
+ 	border-width: 2px 0 0 0 ;
+ 	border-color: #3333CC;
+	font-size: smaller;
+	text-align: left;
+	background-color: white;
+}
+
+#show {
+	display:none;
+}
+#show2 {
+	display:none;
+}
+
+.box  , .box table{
+  padding: 0px;
+  margin: 0px;
+  border-style: dotted;
+  border-width: 1px ;
+  border-color: #3333CC;
+  background-color: white;
+ 
+}	
+
+.box tr.heading {
+ background-color:#3333CC ;
+ color: #FFFF00 ;
+ font-weight: bold;
+}
+
+.client{
+	background-color:#3333CC;
+	cell-spacing: 1px;
+	border-spacing:1px ;
+	font-size:medium;
+}
+
+.report
+{
+
+    border-style: dotted;
+    border-width: 1px ;
+    border-color: #3333CC;
+    width:200px;
+      
+}
+.top tr, table td * {
+	vertical-align:top;
+}
+
+td.client{
+	background-color:lavender;
+	padding:3px;
+	font-size:smaller;	
+}
+
+td.stats {
+background-color: white;
+border: 1px solid black;
+color: black;
+font-family: Verdana,Arial,sans-serif;
+font-size: 11px;
+font-weight: bold;
+margin: 0;
+padding: 4px 8px;
+text-align: center;
+}
+
+.head {
+	padding: 2px;
+	background-color: #3333CC;
+	font-weight: bold;
+	color: white;		
+}		
+
+.button{
+       margin-bottom:0
+}
+
+form{
+	margin-bottom:0
+}
+
+.main{
+	margin: 0px;
+	padding: 0px;
+}
+.bolder {
+	font-variant: small-caps;
+	font-weight: bold;
+	color: red;
+}
+
+.bolder_orange{
+	font-variant: small-caps;
+	font-weight: bold;
+	color: #FF6633;
+}
+
+.bolder_red{
+	font-variant: small-caps;
+	font-weight: bold;
+	color: red;
+}
+
+.pri 
+{
+
+float:right;
+
+}
+
+.pri a:hover
+{
+background-color: #FF6633;}
+.pri li {background-color: #FF6633}
+                      /*
+float:left;
+width:6.6em;
+appearance:button;
+-moz-appearance:button; 
+-webkit-appearance:button;  
+text-decoration:none;
+color:white;
+background-color:purple;
+padding:0.1em 0.7em;
+border-right:1px solid white;
+left:1px
+}
+.pri a:hover {background-color:#ff3300;}
+.pri li {display:inline-block;
+appearance:button;
+-moz-appearance:button; 
+-webkit-appearance:button;  
+
+}
+
+*/
+
+.pri-links {
+ 	background-color: #3333CC;
+ 	padding:3px 10px 0px 0px; /*changed 100 to 50 */
+ 	color: white;
+ 	font-variant: small-caps; 
+ 	font-weight: bolder;
+ 	font-size: small; 
+}
+
+.sec-links ul,.sec-links li {
+ 	display: inline;
+ 	list-style: none;
+ 	padding: 1px;}
+ 	
+.pri-links ul, .pri-links li {
+display:inline-block;
+appearance:button;
+-moz-appearance:button; 
+-webkit-appearance:button;  
+}
+.pri-links a {
+float:left;
+width:6.2em;
+height:2.5em; 
+text-decoration:none;
+color:white;
+/*background-color:  #FF0A70;*/
+background-color:#ffe6e8;
+padding:0.01em 0.3em;
+overflow:hidden;
+border-right:1px solid white;
+left:1px
+
+}
+.pri-links a:hover {background-color:#E6E6E6;}
+.pri-links a.current {background-color:#3faff3;
+color:#ffffff; }
+
+.pri-links ul li:before , .sec-links  ul li:before{
+ content: "\00BB \0020";
+}
+
+.pri-links A:link, .pri-links A:visited, .sec-links A:link, .sec-links A:visited {
+  /*color: white;*/
+ color: black;
+ position:relative;
+ left:1px;  
+ 
+}
+.sec-links a.current {background-color:#3faff3;
+color:#ffffff; }
+
+.pri-links A:hover, .sec-links A:hover, .sec-links A:active{
+ color: red;
+}
+
+.sec-links {
+ background-color: #6666CC;
+ color: white;
+ padding: 5px;
+ font-variant: small-caps; 
+ font-weight: bold;
+ font-size: small; 
+}
+
+.login {
+padding: 50px;
+text-align: center;
+}
+
+.login table{
+  border: 1px dotted #6666CC;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.client-link{
+	background-color: #3333CC;
+	cell-spacing: 4px;
+	border-spacing: 1px ;
+	
+}
+td.client-link{
+	background-color: #3333CC;
+	padding: 3px;
+	font-size: small;
+}
+
+td.client-link A:link, td.client-link A:hover, td.client-link A:visited {
+color:white;
+} 
+
+ul#list-nav {
+margin:4px;
+padding:5px;
+list-style:none;
+width:500px;
+}
+
+ul#list-nav li {
+display:inline
+}
+
+ul#list-nav li a {
+text-decoration:underline;none;
+padding:0px 0px;
+background:#3333CC;485e49;
+color:white;#eee;
+position:ralative;
+width:100px;
+}
+
+ul#list-nav li a {
+text-align:center;
+border-left:0px solid #fff;
+}
+
+ul#list-nav li a:hover {
+background: red;#a2b3a1;
+color:white;#000;    
+}
+
+ul#list-nav li a:active {
+background: red;#a2b3a1;
+color:white;#000;     
+}
+
+.buttons{
+	border : solid 1px #cccccc;
+	background: #3333CC;
+	color :  white;
+	font-weight : bolder;
+	font-size : 11px;
+	padding: 4px;
+    border-top: 3px solid #c0ffff ;
+	border-right: 3px solid #00f ;
+	border-bottom: 3px solid #00f ;
+	border-left: 3px solid #c0ffff ;
+
+}
+.texts{
+	width:9px;
+}
+.delete{
+	border : solid 1px #cccccc;
+	background: red;
+	color :  white;
+	font-weight : bolder;
+	font-size : 11px;
+	padding: 4px;
+	border-top: 3px solid #c0ffff;
+	border-right: 3px solid #00f ;
+	border-bottom: 3px solid #00f ;
+	border-left: 3px solid #c0ffff ;
+
+}
+tddim
+{
+	border-left:1px solid white;
+}
+
+
+/* Hide the checkbox input */
+.modal-toggle {
+	display: none;
+}
+
+/* Style the label to trigger the modal */
+.modal-open {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+}
+
+/* Style the modal */
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s, opacity 0.5s linear;
+}
+
+/* Style the modal content */
+.modal-content {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	width: 80%;
+	max-width: 400px;
+	text-align: center;
+}
+
+/* Style the close button */
+.modal-close {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #dc3545;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	margin-top: 20px;
+}
+
+/* Show the modal when the checkbox is checked */
+.modal-toggle:checked + .modal {
+	visibility: visible;
+	opacity: 1;
+}

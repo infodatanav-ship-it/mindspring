@@ -1,0 +1,93 @@
+<!--<tr>
+       <td align=\"right\"><b>Start Date:</b></td>
+        <td>";
+    	print "</select> \n
+<select  name=\"month2\">";
+   foreach ($months as $num => $month_name) {
+  print '<option value="' . $num . '"';
+	if ($month_name==$results2[0][4]) {
+		print " selected"; }
+		print ">" .$month_name. "</option>\n";
+}
+	print "</select>\n";
+    print '<select name="year2" >';
+	for ($year = date('Y') -2, $max_year = date('Y') + 2; $year < $max_year; $year++) {
+		print '<option   value="' . $year . '"';
+		if ($year==$results2[0][6]) { print " selected"; }
+		print ">" . $year."</option>\n";
+	}
+	print "</select>\n";
+print "</td>";
+	print"</tr>
+ <tr>
+   <td align=\"right\"><b>End Date:</b></td>
+        <td>";
+	print "</select> \n";
+	print '<select name="month3" >';
+	foreach ($months as $num => $month_name) {
+		print '<option   value="' . $num . '"';
+		if ($num==$results2[0][8]) { print " selected"; }
+		print ">" . $month_name . "</option> \n";
+	}
+	print "</select>\n";
+	print '<select name="year3">';
+   
+	for ($year = date('Y')-1, $max_year = date('Y') + 2; $year < $max_year; $year++) {
+		print '<option   value="' . $year . '"';
+		if ($year==$results2[0][10]) { print " selected"; }
+		print ">" . $year . "</option>\n";
+	}
+	print "</select>\n";
+      print" </td>
+      <tr>
+           <td align=\"right\"><b>Cancelled:</b></td>
+        <td><input name=\"term\" value=\"".$results2[0][11]."\" readonly=\"true\" size='9px'></td>
+	</tr>
+<tr>
+           <td align=\"right\"><b>Date of Termination:</b></td>
+        <td><input name=\"term\" value=\"".$results2[0][12]."\" readonly=\"true\" size='9px'></td>
+	</tr>
+        <tr>
+              	<td align=\"right\"><b>Primary Technician:</b>
+               	</td>
+                 	<td>
+                   		<select name=\"primary\"><option value=''></option>";
+
+					foreach ($results3 as $result) {
+						echo "<option value=\"$result[0]\"";
+						if ($result[0] == $results2[0][13])
+							echo ' selected="yes"';
+						print ">$result[0]</option>";
+                 			};
+      					print "</select>   </td>          
+		</tr>
+             <tr>
+              	<td align=\"right\"><b>Backup Technician:</b>
+               	</td>
+                 	<td>
+                   		<select name=\"backup\"><option value=''></option>";
+
+					foreach ($results3 as $result) {
+						echo "<option value=\"$result[0]\"";
+						if ($result[0] == $results2[0][14])
+							echo ' selected="yes"';
+						print ">$result[0]</option>";
+                 			};
+      					print "
+                 			</select></td></tr>
+		<tr>
+              	<td align=\"right\"><b>Server Technician:</b>
+               	</td>
+                 	<td>
+                   		<select name=\"server_techie\"><option value=''></option>";
+
+					foreach ($results3 as $result) {
+                   				echo "<option value=\"$result[0]\"";
+						if ($result[0] == $results2[0][16])
+							echo ' selected="yes"';
+						print ">$result[0]</option>";
+                 			};
+      					print "
+                 			</select>
+               	</td>          
+		</tr>-->

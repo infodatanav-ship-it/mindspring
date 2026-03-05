@@ -1,0 +1,10 @@
+input.numbox{
+	width:30px;
+	height:20px;
+}
+input.mainbox{
+	width:9px;
+	height:5px;
+	font-size:30;
+	font-weight:bold;
+}

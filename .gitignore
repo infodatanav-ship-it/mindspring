@@ -1,0 +1,5 @@
+include/admin.php.inc
+logging.txt
+php_errors.log
+.env
+*.pem
