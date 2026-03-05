@@ -273,7 +273,7 @@ cvzxczxc zxc zxcv
 		print "</table>";
 		print "</td><td>";
 
-		print myTempFunction();
+		print $this->myTempFunction();
 
 		print "</td></tr>";
 
