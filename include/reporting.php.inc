@@ -96,47 +96,7 @@ class billing_reports {
 		print "</div>";
 
 
-		print "<table>
-		
-
-		<tr><td valign=\"top\">";
-
-				$sql="SELECT msi_clients.company, sum( msi_billing.bill_hrs ) hours
-		FROM `msi_clients` , msi_billing
-		WHERE msi_billing.client = msi_clients.id AND
-		week ( msi_billing.date ) = $week -1 AND year( msi_billing.date ) = $year
-		GROUP BY msi_billing.client
-		ORDER BY `hours` DESC";
-		$results = sql::sql_run($sql);
-		print "<span class=\"head\">Client Summary</span>
-			<table class=\"client\" id=\"data-table\">
-			<tr class=\"head\"><td>Client</td><td>Hours</td></tr>";
- 
-		if(is_array($results)){
-			foreach ($results as $result) {
-				print "<tr>
-				<td class=\"client\">$result[0]</td>
-				<td class=\"client\">$result[1]</td>
-				</tr>";
-			}
-		}
-
-		print "<tr><td colspan='2'>";
-
-		print "<div class='button-container'>";
-		print "<button id='downloadBtn' class='download-btn'>Download Table as CSV</button>";
-		print "</div>";
-
-		print "</td></tr>";
-
-
-
-		print "</table>";
-
-		print "</td>";
-		
-		
-		<tr><td valign=\"top\">";
+		print "<table><tr><td valign=\"top\">";
 
 		$sql="SELECT msi_users.id, msi_users.username, sum( msi_billing.bill_hrs ) hours
 		FROM msi_billing , msi_users
@@ -303,8 +263,37 @@ class billing_reports {
 		print "</table>";
 		print "</td><td>";
 
-		print "OLD TABLE LOCALTION";
+		$sql="SELECT msi_clients.company, sum( msi_billing.bill_hrs ) hours
+		FROM `msi_clients` , msi_billing
+		WHERE msi_billing.client = msi_clients.id AND
+		week ( msi_billing.date ) = $week -1 AND year( msi_billing.date ) = $year
+		GROUP BY msi_billing.client
+		ORDER BY `hours` DESC";
+		$results = sql::sql_run($sql);
+		print "<span class=\"head\">Client Summary</span>
+			<table class=\"client\" id=\"data-table\">
+			<tr class=\"head\"><td>Client</td><td>Hours</td></tr>";
+ 
+		if(is_array($results)){
+			foreach ($results as $result) {
+				print "<tr>
+				<td class=\"client\">$result[0]</td>
+				<td class=\"client\">$result[1]</td>
+				</tr>";
+			}
+		}
 
+		print "<tr><td colspan='2'>";
+
+		print "<div class='button-container'>";
+		print "<button id='downloadBtn' class='download-btn'>Download Table as CSV</button>";
+		print "</div>";
+
+		print "</td></tr>";
+
+
+
+		print "</table>";
 		print "</td></tr></table>";
 	}
  
