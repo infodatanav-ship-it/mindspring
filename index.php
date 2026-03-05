@@ -242,6 +242,64 @@ $module = "login";
 			});
 		});
 	</script>
+
+  <script>
+    $(document).ready(function() {
+        $('#downloadBtn').click(function() {
+            // Get table data
+            let csvData = [];
+            
+            // Get headers
+            let headers = [];
+            $('#data-table thead th').each(function() {
+                headers.push($(this).text().trim());
+            });
+            csvData.push(headers);
+            
+            // Get data rows
+            $('#data-table tbody tr').each(function() {
+                let row = [];
+                $(this).find('td').each(function() {
+                    row.push($(this).text().trim());
+                });
+                csvData.push(row);
+            });
+            
+            // Convert to CSV format
+            let csvContent = csvData.map(row => 
+                row.map(cell => {
+                    // Handle cells that contain commas, quotes, or newlines
+                    if (typeof cell === 'string' && (cell.includes(',') || cell.includes('"') || cell.includes('\n'))) {
+                        return '"' + cell.replace(/"/g, '""') + '"';
+                    }
+                    return cell;
+                }).join(',')
+            ).join('\n');
+            
+            // Add BOM for UTF-8 to handle special characters properly
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            
+            // Create download link
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            // Set download attributes
+            link.href = url;
+            link.setAttribute('download', 'table-data.csv');
+            
+            // Append to body, click, and remove
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Clean up the URL object
+            URL.revokeObjectURL(url);
+            
+            // Optional: Show success message
+            alert('Table data has been downloaded as CSV!');
+        });
+    });
+  </script>
 	
 	<?php 
 //<li><a href=\"index.php?module=password\">Passwords</a></li> Disabled password module sandiswa(5/17/2020)

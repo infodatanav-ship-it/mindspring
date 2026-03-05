@@ -282,6 +282,11 @@ class billing_reports {
 				</tr>";
 			}
 		}
+
+		print "<div class='button-container'>";
+		print "<button id='downloadBtn' class='download-btn'>Download Table as CSV</button>";
+		print "</div>";
+
 		print "</table>";
 		print "</td></tr></table>";
 	}
