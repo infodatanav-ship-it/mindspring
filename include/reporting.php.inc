@@ -273,7 +273,7 @@ cvzxczxc zxc zxcv
 		print "</table>";
 		print "</td><td>";
 
-		print billing_reports::myTempFunction();
+		print self::myTempFunction();
 
 		print "</td></tr>";
 
