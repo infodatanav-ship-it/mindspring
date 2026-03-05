@@ -273,7 +273,7 @@ cvzxczxc zxc zxcv
 		print "</table>";
 		print "</td><td>";
 
-		print self::myTempFunction();
+		print self::myTempFunction($week, $year);
 
 		print "</td></tr>";
 
@@ -282,7 +282,7 @@ cvzxczxc zxc zxcv
 		print "</td></tr></table>";
 	}
 
-	function myTempFunction(){
+	function myTempFunction($week, $year){
 		$output = "";
 		$sql="SELECT msi_clients.company, sum( msi_billing.bill_hrs ) hours
 		FROM `msi_clients` , msi_billing
