@@ -271,7 +271,7 @@ class billing_reports {
 		ORDER BY `hours` DESC";
 		$results = sql::sql_run($sql);
 		print "<span class=\"head\">Client Summary</span>
-			<table class=\"client\">
+			<table class=\"client\" id=\"data-table\">
 			<tr class=\"head\"><td>Client</td><td>Hours</td></tr>";
  
 		if(is_array($results)){
@@ -283,9 +283,15 @@ class billing_reports {
 			}
 		}
 
+		print "<tr><td colspan='2'>";
+
 		print "<div class='button-container'>";
 		print "<button id='downloadBtn' class='download-btn'>Download Table as CSV</button>";
 		print "</div>";
+
+		print "</td></tr>";
+
+
 
 		print "</table>";
 		print "</td></tr></table>";
