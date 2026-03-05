@@ -13,7 +13,7 @@ error_reporting(1);
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
 <link rel="stylesheet" type="text/css"  href="style.css" />
 
-<title>Mindspring Intranet</title>
+<title>Mindspring Intranet (<?php echo date('Y-m-d H:i:s'); ?>)</title>
 </head>
 <body>
 <h1>Mindspring Intranet</h1>
