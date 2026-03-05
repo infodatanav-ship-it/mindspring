@@ -96,14 +96,11 @@ class billing_reports {
 		print "</div>";
 
 
-		print "<table><tr>
-		
+		print "<table><tr><td>";
 
-		<td>
+		print self::myTempFunction($week, $year);
 
-cvzxczxc zxc zxcv
-
-		</td>
+		print "</td>
 
 
 		<td valign=\"top\">";
@@ -271,14 +268,14 @@ cvzxczxc zxc zxcv
 			<td class=\"client\"><b>$totalNBH</b></td></tr>";
 
 		print "</table>";
-		print "</td><td>";
+		print "</td>";
 
-		print self::myTempFunction($week, $year);
+		// print "<td>";
+		// print self::myTempFunction($week, $year);
+		// print "</td>";
 
-		print "</td></tr>";
-
+		print "</tr>";
 		print "</table>";
-
 		print "</td></tr></table>";
 	}
 
