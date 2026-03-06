@@ -199,6 +199,7 @@ class billing_reports {
 					$totalTMB = $totalTMB + 0;
 					$totalTMBHTML = "<td class=\"client\">0</td>";
 				}
+				var_dump("maintenance: " . $lineTMB);
 
 				/* ----------------------------------------------------------------------------------- */
 				// Total Proposal Billed
@@ -216,6 +217,7 @@ class billing_reports {
 					$totalTPB = $totalTPB + 0;
 					$totalTPBHTML = "<td class=\"client\">0</td>";
 				}
+				var_dump("proposal: " . $lineTPB);
 
 				/* ----------------------------------------------------------------------------------- */
 
