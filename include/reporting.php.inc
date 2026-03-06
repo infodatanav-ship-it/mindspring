@@ -98,7 +98,7 @@ class billing_reports {
 
 		print "<table><tr>";
 		print "<td valign=\"top\">";
-		print self::ClientSummaryTable($week, $year);
+		print self::ClientSummaryTable($week, $year, $month);
 		print "</td>";
 		print "<td valign=\"top\">";
 
@@ -278,7 +278,7 @@ class billing_reports {
 		print "</tr></table>";
 	}
 
-	function ClientSummaryTable($week, $year){
+	function ClientSummaryTable($week, $year, $month){
 		$output = "";
 		$sql="SELECT msi_clients.company, sum( msi_billing.bill_hrs ) hours, msi_clients.id
 		FROM `msi_clients` , msi_billing
