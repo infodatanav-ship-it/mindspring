@@ -239,8 +239,8 @@ class billing_reports {
 
 				/* ----------------------------------------------------------------------------------- */
 				
-				$lineTot = $lineTAHB + $lineTCB;
-				
+				$lineTot = $lineTAHB + $lineTCB + $lineTMB + $lineTPB;
+
 				print "<tr>" .
 				"<td class=\"client\">" . ucfirst($result[1]) . "</td>" . 
 				"<td class=\"client\">$lineTot</td>" .
