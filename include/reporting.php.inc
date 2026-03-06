@@ -98,6 +98,8 @@ class billing_reports {
 
 		print "<table><tr>";
 		print "<td valign=\"top\">";
+		$month = date('n', strtotime($year . 'W' . str_pad($week, 2, '0', STR_PAD_LEFT)));
+
 		print self::ClientSummaryTable($week, $year, $month);
 		print "</td>";
 		print "<td valign=\"top\">";
