@@ -96,14 +96,12 @@ class billing_reports {
 		print "</div>";
 
 
-		print "<table><tr><td>";
+		print "<table><tr><td valign=\"top\">";
 
 		print self::myTempFunction($week, $year);
 
-		print "</td>
-
-
-		<td valign=\"top\">";
+		print "</td>";
+		print "<td>";
 
 		$sql="SELECT msi_users.id, msi_users.username, sum( msi_billing.bill_hrs ) hours
 		FROM msi_billing , msi_users
