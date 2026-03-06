@@ -271,9 +271,9 @@ class billing_reports {
 		// print self::ClientSummaryTable($week, $year);
 		// print "</td>";
 
-		print "</tr>";
-		print "</table>";
-		print "</td></tr></table>";
+		// print "</tr>";
+		// print "</table>";
+		print "</tr></table>";
 	}
 
 	function ClientSummaryTable($week, $year){
