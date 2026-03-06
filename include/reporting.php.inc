@@ -232,7 +232,7 @@ class billing_reports {
 
 				//var_dump($totalNBH);
 				
-				$currentTotalHoursBilled = $totalCB + $totalAHB;
+				$currentTotalHoursBilled = $totalCB + $totalAHB + $lineTMB + $lineTPB;
 				//$totalHB = $totalHB + ( $currentTotalHoursBilled );
 
 				/* ----------------------------------------------------------------------------------- */
