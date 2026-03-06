@@ -167,7 +167,7 @@ class billing_reports {
 					$totalCB = $totalCB + 0;
 					$totalCBHTML = "<td class=\"client\">0</td>";
 				}
-				
+
 				/* ----------------------------------------------------------------------------------- */
 				
 				$sqlTotalAdHocBilled = "SELECT SUM(msi_billing.bill_hrs) as billedhours FROM msi_billing , msi_users WHERE msi_users.id = msi_billing.techie AND WEEK ( msi_billing.date ) = $week - 1 AND year( msi_billing.date ) = $year AND msi_billing.type = 'Ad hoc' AND msi_billing.techie = '".$techid."';";
@@ -193,13 +193,13 @@ class billing_reports {
 				
 				if ( $resultTotalMaintenanceBilled[0]['billedhours'] ) {
 					$lineTMB = floatval($resultTotalMaintenanceBilled[0]['billedhours']);
+					var_dump("maintenance: " . $lineTMB . "<br />");
 					$totalTMB = $totalTMB + floatval($resultTotalMaintenanceBilled[0]['billedhours']);
 					$totalTMBHTML = "<td class=\"client\">" . floatval($resultTotalMaintenanceBilled[0]['billedhours']) . "</td>";
 				} else {
 					$totalTMB = $totalTMB + 0;
 					$totalTMBHTML = "<td class=\"client\">0</td>";
 				}
-				var_dump("maintenance: " . $lineTMB);
 
 				/* ----------------------------------------------------------------------------------- */
 				// Total Proposal Billed
@@ -211,13 +211,13 @@ class billing_reports {
 
 				if ( $resultTotalProposalBilled[0]['billedhours'] ) {
 					$lineTPB = floatval($resultTotalProposalBilled[0]['billedhours']);
+					var_dump("proposal: " . $lineTPB . "<br />");
 					$totalTPB = $totalTPB + floatval($resultTotalProposalBilled[0]['billedhours']);
 					$totalTPBHTML = "<td class=\"client\">" . floatval($resultTotalProposalBilled[0]['billedhours']) . "</td>";
 				} else {
 					$totalTPB = $totalTPB + 0;
 					$totalTPBHTML = "<td class=\"client\">0</td>";
 				}
-				var_dump("proposal: " . $lineTPB);
 
 				/* ----------------------------------------------------------------------------------- */
 
