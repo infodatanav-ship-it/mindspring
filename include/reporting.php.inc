@@ -97,9 +97,9 @@ class billing_reports {
 
 
 		print "<table><tr>";
-		// print "<td valign=\"top\">";
-		// print self::ClientSummaryTable($week, $year);
-		// print "</td>";
+		print "<td valign=\"top\">";
+		print self::ClientSummaryTable($week, $year);
+		print "</td>";
 		print "<td>";
 
 		$sql="SELECT msi_users.id, msi_users.username, sum( msi_billing.bill_hrs ) hours
