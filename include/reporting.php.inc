@@ -299,10 +299,11 @@ class billing_reports {
 		}
 
 		$output .= "<tr><td colspan='2'>";
-
 		$output .= "<div class='button-container'>";
 		$output .= "<button id='downloadBtn' class='download-btn'>Download Table as CSV</button>";
 		$output .= "</div>";
+		$output .= "</td></tr>";
+		$output .= "</table>";
 
 		return $output;
 
