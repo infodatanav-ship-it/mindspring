@@ -280,7 +280,7 @@ class billing_reports {
 
 	function ClientSummaryTable($week, $year){
 		$output = "";
-		$sql="SELECT msi_clients.company, sum( msi_billing.bill_hrs ) hours
+		$sql="SELECT msi_clients.company, sum( msi_billing.bill_hrs ) hours, msi_clients.id
 		FROM `msi_clients` , msi_billing
 		WHERE msi_billing.client = msi_clients.id AND
 		week ( msi_billing.date ) = $week -1 AND year( msi_billing.date ) = $year
@@ -294,7 +294,7 @@ class billing_reports {
 		if(is_array($results)){
 			foreach ($results as $result) {
 				$output .= "<tr>
-				<td class=\"client\">$result[0]</td>
+				<td class=\"client\"> <a href = \"?module=billing&action=contract_client&id=$result[2]&year=$year&month=$month\">$result[0]</td>
 				<td class=\"client\">$result[1]</td>
 				</tr>";
 			}
