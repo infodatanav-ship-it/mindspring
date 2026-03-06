@@ -1556,7 +1556,7 @@ print "</select>\n";
    GROUP BY msi_billing.client
    ORDER BY `hours` DESC";
   $results = sql::sql_run($sql); 
-   print "<span class=\"head\">Client Summary</span>
+   print "<span class=\"head\">Client Summary 2</span>
 	  				<table class=\"client\">
 	  				<tr class=\"head\"><td>Client</td><td>Hours</td></tr>";
    	if(is_array($results)){
