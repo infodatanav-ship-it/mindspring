@@ -96,11 +96,10 @@ class billing_reports {
 		print "</div>";
 
 
-		print "<table><tr><td valign=\"top\">";
-
-		print self::myTempFunction($week, $year);
-
-		print "</td>";
+		print "<table><tr>";
+		// print "<td valign=\"top\">";
+		// print self::ClientSummaryTable($week, $year);
+		// print "</td>";
 		print "<td>";
 
 		$sql="SELECT msi_users.id, msi_users.username, sum( msi_billing.bill_hrs ) hours
@@ -269,7 +268,7 @@ class billing_reports {
 		print "</td>";
 
 		// print "<td>";
-		// print self::myTempFunction($week, $year);
+		// print self::ClientSummaryTable($week, $year);
 		// print "</td>";
 
 		print "</tr>";
@@ -277,7 +276,7 @@ class billing_reports {
 		print "</td></tr></table>";
 	}
 
-	function myTempFunction($week, $year){
+	function ClientSummaryTable($week, $year){
 		$output = "";
 		$sql="SELECT msi_clients.company, sum( msi_billing.bill_hrs ) hours
 		FROM `msi_clients` , msi_billing
