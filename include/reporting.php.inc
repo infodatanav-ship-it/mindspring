@@ -100,7 +100,7 @@ class billing_reports {
 		print "<td valign=\"top\">";
 		print self::ClientSummaryTable($week, $year);
 		print "</td>";
-		print "<td>";
+		print "<td valign=\"top\">";
 
 		$sql="SELECT msi_users.id, msi_users.username, sum( msi_billing.bill_hrs ) hours
 		FROM msi_billing , msi_users
