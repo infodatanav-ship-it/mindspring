@@ -193,7 +193,7 @@ class billing_reports {
 				
 				if ( $resultTotalMaintenanceBilled[0]['billedhours'] ) {
 					$lineTMB = floatval($resultTotalMaintenanceBilled[0]['billedhours']);
-					var_dump("maintenance: " . $lineTMB . "<br />");
+					// var_dump("maintenance: " . $lineTMB . "<br />");
 					$totalTMB = $totalTMB + floatval($resultTotalMaintenanceBilled[0]['billedhours']);
 					$totalTMBHTML = "<td class=\"client\">" . floatval($resultTotalMaintenanceBilled[0]['billedhours']) . "</td>";
 				} else {
@@ -211,7 +211,7 @@ class billing_reports {
 
 				if ( $resultTotalProposalBilled[0]['billedhours'] ) {
 					$lineTPB = floatval($resultTotalProposalBilled[0]['billedhours']);
-					var_dump("proposal: " . $lineTPB . "<br />");
+					// var_dump("proposal: " . $lineTPB . "<br />");
 					$totalTPB = $totalTPB + floatval($resultTotalProposalBilled[0]['billedhours']);
 					$totalTPBHTML = "<td class=\"client\">" . floatval($resultTotalProposalBilled[0]['billedhours']) . "</td>";
 				} else {

@@ -1923,7 +1923,7 @@ print "</select>\n";
     ) = $month AND year( msi_billing.date ) = $year
     ORDER BY msi_billing.date DESC , msi_users.username DESC";
   $results = sql::sql_run($sql); 
-  print "<span class=\"head\">Billing Table</span>
+  print "<span class=\"head\">Billing Table 3</span>
 	  				<table class=\"client\" style=\"width: 60%;\">
 	  				<tr class=\"head\"><td>Name</td><td>Date</td><td>Client</td><td>Hours</td></tr>";
    	if(is_array($results)){
