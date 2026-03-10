@@ -68,8 +68,8 @@ $hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi
 $myname=$hereiam[0]['Name'];
 $from=$hereiam[0]['Number'];
 
-var_dump($sql[0]);
-$sms_users = $sql[0];
+var_dump($sql);
+// $sms_users = $sql[0];
 var_dump($sms_users);
 
 
