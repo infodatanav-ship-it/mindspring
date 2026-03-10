@@ -74,8 +74,8 @@ var_dump($sms_users);
 
 foreach ($sql as $row) {
   var_dump($row);
-  echo "<br />"
-  echo "<br />"
+  echo "<br />";
+  echo "<br />";
 }
 
 echo "<h2>Mindspring SMS Portal</h2>";
