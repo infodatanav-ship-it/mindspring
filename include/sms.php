@@ -77,7 +77,7 @@ $hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi
 
 var_dump($hereiam);
 
-$myname=$hereiam[0];
+$myname=$hereiam[0]['Name'];
 
 $from=$hereiam[1];
 echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
