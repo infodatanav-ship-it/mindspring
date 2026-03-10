@@ -70,12 +70,11 @@ $from=$hereiam[0]['Number'];
 
 // var_dump($sql);
 // $sms_users = $sql[0];
-var_dump($sms_users);
 
-echo '<table>';
+echo "<table>";
 foreach ($sql as $row) {
-  // var_dump($row);
-  echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0] . "</td><td width='30px'></td></tr>";
+  echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row[1] . "' />" . $row[0] . "</td><td width='30px'></td></tr>";
+  // echo "<tr><td>" . $row[0] . "</td><td width='30px'></td></tr>";
 }
 echo "</table>";
 
