@@ -200,22 +200,22 @@ class admin {
 	
 	
 	
-$link = mysqli_connect("intranetvm.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
+// $link = mysqli_connect("intranetvm.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
 		
-if (!$link) {
-	echo "Error: Unable to connect to MySQL." . PHP_EOL;
-	echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
-	echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
-	exit;
-}
+// if (!$link) {
+// 	echo "Error: Unable to connect to MySQL." . PHP_EOL;
+// 	echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
+// 	echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
+// 	exit;
+// }
 
 	//	or die("could not connect : " . mysqli_error());
 	// mysql_select_db("msi") or die("could not select database" . mysql_error());
 	//$result = mysqli_query($link,$query) or die("query failed : " . mysqli_error($link));
 //	$values;
 	
-$myresults = mysqli_query($link,'
- SELECT `username` , `name` , CONCAT(`read` , `edit` , `add`)
+// $myresults = mysqli_query($link,'
+$myresults = sql::sql_run("SELECT `username` , `name` , CONCAT(`read` , `edit` , `add`)
 FROM (
 
 SELECT `msi_users`.`username` , `msi_users`.`id` AS user_id, `msi_module`.`id` AS module_id, `msi_module`.`name`
@@ -226,7 +226,7 @@ LEFT JOIN (
 ) ON ( BOB.`user_id` = `msi_acl`.`user`
 AND BOB.`module_id` = `msi_acl`.`module` )
 ORDER BY `username` , `name`
-LIMIT 0 , 1000 ');
+LIMIT 0 , 1000 ");
 
 
 	echo '<table style="border:1px solid black">
