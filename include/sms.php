@@ -163,13 +163,11 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
   name=message 
   wrap=physical 
   cols=50 
-  placeholder="Please enter your message here"
   rows=4 
   onKeyDown='textCounter(this.form.message,this.form.remLen,160);' 
   onKeyUp='textCounter(this.form.message,this.form.remLen,160);' 
   onfocus='if(this.value==this.defaultValue){this.value='';}' 
-  onblur='if(this.value==''){this.value=this.defaultValue;}'>
-</textarea>
+  onblur='if(this.value==''){this.value=this.defaultValue;}'>Please enter your message here</textarea>
 <br>
 <input readonly type=text name=remLen size=3 maxlength=3 value='160'> characters left</font>
 <br />
