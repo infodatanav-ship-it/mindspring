@@ -99,7 +99,7 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
   $i = 0;
   foreach ($results as $row) {
 
-  
+    var_dump($row);
     $replnum=substr_replace ($row[1],'0', 0, 2);
     $replnum=substr($replnum, 0, 3)." ".substr($replnum, 3, 3)." ".substr($replnum, 6, 4);
 
