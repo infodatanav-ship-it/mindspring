@@ -68,13 +68,13 @@ $hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi
 $myname=$hereiam[0]['Name'];
 $from=$hereiam[0]['Number'];
 
-var_dump($sql);
+// var_dump($sql);
 // $sms_users = $sql[0];
 var_dump($sms_users);
 
 echo '<table>';
 foreach ($sql as $row) {
-  var_dump($row);
+  // var_dump($row);
   echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0] . "</td><td width='30px'></td></tr>";
 }
 echo "</table>";
