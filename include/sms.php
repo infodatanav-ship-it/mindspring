@@ -1,6 +1,6 @@
 <?php
 session_start();
-// include('sql.php.inc');
+require_once('sql.php.inc');
 ?>
 <html>
 <head>
