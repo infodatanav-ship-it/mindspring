@@ -61,25 +61,13 @@ $myname=$_SESSION['username'];
 //     exit;
 // }
 
-// var_dump($myname);
 
 $sql = sql::sql_run('SELECT `Name`, `Number` FROM msi_sms_users ORDER BY `Name`');
 $hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
 
-// var_dump(count($sql));
-// $count = count($sql);
-
-// $$hereiam = $whoami;
-// if(is_array($results)){
-// 	foreach ($results as $result) {
-
-// $hereiam=mysqli_fetch_row($whoami);
-
-// var_dump($hereiam);
-
 $myname=$hereiam[0]['Name'];
-
 $from=$hereiam[0]['Number'];
+
 echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 ?>
 <p style="font-size:smaller">
@@ -91,13 +79,13 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 <?php
 
   // $count=mysqli_num_rows($sql);
-	$halfcount=round($count/2); 
+	// $halfcount=round($count/2); 
 
   echo '<table>';
 
 
   $i = 0;
-  foreach ($results as $row) {
+  foreach ($sql  as $row) {
 
     var_dump($row);
     $replnum=substr_replace ($row[1],'0', 0, 2);
