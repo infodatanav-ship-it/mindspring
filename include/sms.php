@@ -88,7 +88,7 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 
   var_dump( "start table" );
   // $i = 0;
-  foreach ($sql as $row) {
+  foreach ($sql[0] as $row) {
 
 
 
