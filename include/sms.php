@@ -93,19 +93,16 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 	// $halfcount=round($count/2); 
 
   echo '<table>';
-
-
-  var_dump( "start table" );
   // $i = 0;
   foreach ($sql as $row) {
 
 
 
-    // var_dump($row);
+
     $replnum=substr_replace ($row['Number'],'0', 0, 2);
     $replnum=substr($replnum, 0, 3)." ".substr($replnum, 3, 3)." ".substr($replnum, 6, 4);
 
-    echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number'] . "' /></td><td width='30px'>" . $row['Name'].' ('.$replnum.')' . "</td></tr>";
+    echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number'] . "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td></tr>";
 
     // if($i%2) {//odd
       // echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number']; "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td>";
