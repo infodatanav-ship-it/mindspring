@@ -64,15 +64,16 @@ $myname=$_SESSION['username'];
 // var_dump($myname);
 
 $sql = sql::sql_run('SELECT `Name`, `Number` FROM msi_sms_users ORDER BY `Name`');
-$whoami = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
+$$hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
 
 var_dump(count($sql));
+$count = count($sql);
 
-var_dump($whoami);
-  	// if(is_array($results)){
-  	// 	foreach ($results as $result) {
+// $$hereiam = $whoami;
+// if(is_array($results)){
+// 	foreach ($results as $result) {
 
-$hereiam=mysqli_fetch_row($whoami);
+// $hereiam=mysqli_fetch_row($whoami);
 
 $myname=$hereiam[0];
 //if ($myname=='') {die('You are not logged in! <a href="index.php">Back to the Intranet</a>');}
@@ -90,27 +91,22 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
   // $count=mysqli_num_rows($sql);
 	$halfcount=round($count/2); 
 
-  echo '<table>';	
-	for ( $i=1; $i<=$count; $i++) {
-		$row=mysqli_fetch_row($sql);
-	        $replnum=substr_replace ($row[1],'0', 0, 2);
-	        $replnum=substr($replnum, 0, 3)." ".substr($replnum, 3, 3)." ".substr($replnum, 6, 4);
-	      
-	        
-	 //       echo $waleed;
-	
-	        if($i%2) {//odd
-	
-	  	    
-		?>
-		<tr><td><input type='checkbox' name='recipient[]' value='<?php echo $row[1]; ?>' /><?php echo $row[0].' ('.$replnum.')'; ?></td><td width=30px></td>
-		<?php
-		}else{//even
-		?>
-		<td><input type='checkbox' name='recipient[]' value='<?php echo $row[1]; ?>' /><?php echo $row[0].' ('.$replnum.')'; ?></td></tr>
-		<?php
-		}
-	      }
+  echo '<table>';
+
+  if(is_array($results)){
+    $i = 0;
+	  foreach ($results as $row) {
+      $replnum=substr_replace ($row[1],'0', 0, 2);
+      $replnum=substr($replnum, 0, 3)." ".substr($replnum, 3, 3)." ".substr($replnum, 6, 4);
+
+      if($i%2) {//odd
+        echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td><td width='30px'></td>";
+      }else{//even
+        echo "<td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td></tr>";
+      }
+      $i++;
+    }
+  }
 ?>
 </table>
 	
