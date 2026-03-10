@@ -61,6 +61,8 @@ $myname=$_SESSION['username'];
 //     exit;
 // }
 
+var_dump($myname);
+
 $sql = sql::sql_run('SELECT `Name`, `Number` FROM msi_sms_users ORDER BY `Name`');
 $whoami = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
 
