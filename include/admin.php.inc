@@ -228,6 +228,8 @@ AND BOB.`module_id` = `msi_acl`.`module` )
 ORDER BY `username` , `name`
 LIMIT 0 , 1000 ");
 
+var_dump($myresults);
+
 
 	echo '<table style="border:1px solid black">
 	  <tr class="heading">
@@ -251,21 +253,26 @@ LIMIT 0 , 1000 ");
 
 	$currentname='';
 
- 	   while ($row=mysqli_fetch_row($myresults)) {
+	while ($row=mysqli_fetch_row($myresults)) {
 	
-		if ($currentname!=$row[0]) {$currentname=$row[0]; echo '</tr><tr><td>'.$row[0].'</td>';}
-
-			if ($row[2]=='100')
-				{ echo '<td>read</td>'; }
-			elseif ($row[2]=='110')
-				{ echo '<td>edit</td>'; }
-			elseif ($row[2]=='111')
-				{ echo '<td>add</td>'; }
-			else { echo '<td>---</td>'; }	
+		if ($currentname!=$row[0]) {
+			$currentname=$row[0];
+			echo '</tr><tr><td>'.$row[0].'</td>';
+		}
+		
+		if ($row[2]=='100') {
+			echo '<td>read</td>';
+		} elseif ($row[2]=='110') {
+			echo '<td>edit</td>';
+		} elseif ($row[2]=='111') {
+			echo '<td>add</td>';
+		} else {
+			echo '<td>---</td>';
+		}
 		$currentname=$row[0];
 			
 
-           }
+	}
 	echo '</tr></table>';
 }
 

@@ -60,18 +60,24 @@ $myname=$_SESSION['username'];
 //     exit;
 // }
 
-$sql=mysqli_query($link,'SELECT `Name`, `Number` FROM msi_sms_users ORDER BY `Name`');
-$whoami=mysqli_query($link,'SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
+$sql = sql::sql_run('SELECT `Name`, `Number` FROM msi_sms_users ORDER BY `Name`');
+$whoami = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
+
+var_dump($whoami);
+  	// if(is_array($results)){
+  	// 	foreach ($results as $result) {
 
 $hereiam=mysqli_fetch_row($whoami);
+
 $myname=$hereiam[0];
 //if ($myname=='') {die('You are not logged in! <a href="index.php">Back to the Intranet</a>');}
 $from=$hereiam[1];
 echo "<u> Hello $myname 
  please select your recipients:</u><br />";
 ?>
-<p style="font-size:smaller"><i>Every checked recipient will get a copy, if the custom field is set a copy will be sent to this number as well. <br />
-Your cellnumber will be used as senderID.</i><br />
+<p style="font-size:smaller">
+  <i>Every checked recipient will get a copy, if the custom field is set a copy will be sent to this number as well. <br />
+  Your cellnumber will be used as senderID.</i><br />
 <!---   Want to notify customers of internet / email problems? Click <a href="sms_customers.php">here</a>  --> </p>
 
 <form name="mainform" action="include/sms.php" target="_self" method="post">
