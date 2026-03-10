@@ -155,19 +155,21 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 
     echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number'] . "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td></tr>";
 
-    // if($i%2) {//odd
-      // echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number']; "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td>";
-    // }else{//even
-      // echo "<td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td></tr>";
-    // }
-    // $i++;
-  }
-
 ?>
 </table>
 	
 <input type='text' name='recipient[]' value=''> Custom number<br /><br />
-<textarea name=message wrap=physical cols=50 rows=4 onKeyDown='textCounter(this.form.message,this.form.remLen,160);' onKeyUp='textCounter(this.form.message,this.form.remLen,160);' onfocus='if(this.value==this.defaultValue){this.value='';}' onblur='if(this.value==''){this.value=this.defaultValue;}'>Please enter your message here</textarea>
+<textarea 
+  name=message 
+  wrap=physical 
+  cols=50 
+  placeholder="Please enter your message here"
+  rows=4 
+  onKeyDown='textCounter(this.form.message,this.form.remLen,160);' 
+  onKeyUp='textCounter(this.form.message,this.form.remLen,160);' 
+  onfocus='if(this.value==this.defaultValue){this.value='';}' 
+  onblur='if(this.value==''){this.value=this.defaultValue;}'>
+</textarea>
 <br>
 <input readonly type=text name=remLen size=3 maxlength=3 value='160'> characters left</font>
 <br />
