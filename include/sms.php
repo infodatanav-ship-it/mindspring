@@ -38,6 +38,9 @@ if (isset($_GET['ajax']) && isset($_POST['send'])) {
 <head>
 <title>Mindspring SMS Portal</title>
 <meta name='author' value='Marius Pese' />
+<!-- Favicon: prefer /favicon.ico, fallback to small embedded PNG -->
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=">
 <SCRIPT LANGUAGE="JavaScript">
 <!-- Original:  Ronnie T. Moore -->
 <!-- Web Site:  The JavaScript Source -->
