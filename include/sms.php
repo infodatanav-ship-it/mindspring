@@ -75,8 +75,10 @@ $hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi
 
 // $hereiam=mysqli_fetch_row($whoami);
 
+var_dump($hereiam);
+
 $myname=$hereiam[0];
-//if ($myname=='') {die('You are not logged in! <a href="index.php">Back to the Intranet</a>');}
+
 $from=$hereiam[1];
 echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 ?>
