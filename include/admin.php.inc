@@ -228,7 +228,7 @@ AND BOB.`module_id` = `msi_acl`.`module` )
 ORDER BY `username` , `name`
 LIMIT 0 , 1000 ");
 
-var_dump($myresults);
+// var_dump($myresults);
 
 
 	echo '<table style="border:1px solid black">
@@ -253,8 +253,9 @@ var_dump($myresults);
 
 	$currentname='';
 
-	while ($row=mysqli_fetch_row($myresults)) {
-	
+	// while ($row=mysqli_fetch_row($myresults)) {
+
+	foreach ($myresults as $row) {
 		if ($currentname!=$row[0]) {
 			$currentname=$row[0];
 			echo '</tr><tr><td>'.$row[0].'</td>';

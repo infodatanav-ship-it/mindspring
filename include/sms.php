@@ -62,9 +62,6 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 <form name="mainform" action="include/sms.php" target="_self" method="post">
 <?php
 
-  // $count=mysqli_num_rows($sql);
-	// $halfcount=round($count/2); 
-
   echo '<table>';
   // $i = 0;
   foreach ($sql as $row) {
@@ -74,12 +71,6 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 
     echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number'] . "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td></tr>";
 
-    // if($i%2) {//odd
-      // echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number']; "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td>";
-    // }else{//even
-      // echo "<td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td></tr>";
-    // }
-    // $i++;
   }
 
 ?>
@@ -98,90 +89,64 @@ Alright, please <input type='submit' value='send this message' name='send'>
 
 <?php
 
-if (isset($_POST['send'])) 
-{
-		
+if (isset($_POST['send'])) {
 
-//$url = "$baseurl/http/auth?user=$user&password=$password&api_id=$api_id";
-///do auth call
-//$ret = file($url);
-// split our response. return string is on first line of the data returned
-//$sess = split(":",$ret[0]);
-// if ($sess[0] == "OK") {
-//$sess_id = trim($sess[1]); // remove any whitespace
-  
 
-$message=$_POST['message'];
-$text = urlencode($message);
-$user = "mindspring";
-$password = "jifejare";
-//$api_id = "3206492";
-//$baseurl ="http://www.mymobileapi.com";
-$from= $hereiam[0]['Number'];
-foreach($_POST['recipient'] as $value){
-	
-$data= array(
-"Type"=> "sendparam", 
-"Username" => $user,
-"Password" => $password,
-"live" => "true",
-"numto" => $value,
-"data1" => $message
-) ; 
+  $message=$_POST['message'];
+  $text = urlencode($message);
+  $user = "mindspring";
+  $password = "jifejare";
+  //$api_id = "3206492";
+  //$baseurl ="http://www.mymobileapi.com";
+  $from= $hereiam[0]['Number'];
+  foreach($_POST['recipient'] as $value){
 
-//This contains data that you will send to the server.
-$data = http_build_query($data); //builds the post string ready for posting
-echo do_post_request('https://www.mymobileapi.com/api5/http5.aspx', $data);
-echo "<p>Message successfully sent to: ". $value."<br /><a href='http://devintranet.mindspring.local/index.php?module=sms'>Take me home</a>'</p>";
-/*unset($value);
-}
-else{
-echo "<p>Send message failed: " . $value."<br /><a href='http://devintranet.mindspring.local/?'>Take me home</a>'</p>";
-}	
-unset($value);
-}*/
-}
+    $data= array(
+      "Type"=> "sendparam", 
+      "Username" => $user,
+      "Password" => $password,
+      "live" => "true",
+      "numto" => $value,
+      "data1" => $message
+    ) ; 
+
+    //This contains data that you will send to the server.
+    $data = http_build_query($data); //builds the post string ready for posting
+    echo do_post_request('https://www.mymobileapi.com/api5/http5.aspx', $data);
+    echo "<p>Message successfully sent to: ". $value."<br />";
+    echo "<a href='http://devintranet.mindspring.local/index.php?module=sms'>Take me home</a>'</p>";
+
+  }
 }
 
-//	foreach ($to as &$value) 
-//	{
-//	if ($value=='') {break;}
-//	$url = "$baseurl/http/sendmsg?session_id=$sess_id&to=$value&text=$text&from=$from";
-	// do sendmsg call
-//	$ret = file($url);
-//	$send = split(":",$ret[0]);
-//		if ($send[0] == "ID") {
- function do_post_request($url, $data, $optional_headers = null)
-  {
-     $params = array('http' => array(
+
+function do_post_request($url, $data, $optional_headers = null) {
+  $params = array('http' => array(
                  'method' => 'POST',
                   'content' => $data
               ));
-     if ($optional_headers !== null) {
-        $params['http']['header'] = $optional_headers;
-     }
-     $ctx = stream_context_create($params);
-     $fp = @fopen($url, 'rb', false, $ctx);
-     if (!$fp) {
-        throw new Exception("Problem with $url, $php_errormsg");
-        	
-     }
-     $response = @stream_get_contents($fp);
-     if ($response === false) {
-     	echo "responce = false";
-        throw new Exception("Problem reading data from $url, $php_errormsg");
-        
-     }
-     $response;
-    return formatXmlString($response);
+  if ($optional_headers !== null) {
+      $params['http']['header'] = $optional_headers;
+  }
+  $ctx = stream_context_create($params);
+  $fp = @fopen($url, 'rb', false, $ctx);
+  if (!$fp) {
+    throw new Exception("Problem with $url, $php_errormsg");
   }
 
-function formatXmlString($xml) 
-{  
-	
+  $response = @stream_get_contents($fp);
+  if ($response === false) {
+    echo "responce = false";
+    throw new Exception("Problem reading data from $url, $php_errormsg");
+  }
+  $response;
+  return formatXmlString($response);
+}
+
+function formatXmlString($xml) {
   // add marker linefeeds to aid the pretty-tokeniser (adds a linefeed between all tag-end boundaries)
   $xml = preg_replace('/(>)(<)(\/*)/', "$1\n$2$3", $xml);
-  	
+
   // now indent the tags
   $token      = strtok($xml, "\n");
   $result     = ''; // holds formatted version as it is built
@@ -189,41 +154,36 @@ function formatXmlString($xml)
   $matches    = array(); // returns from preg_matches()
   if ($token === false){
 
-  // scan each line and adjust indent based on opening/closing tags
-  while ($token !== false) {
- 
+    // scan each line and adjust indent based on opening/closing tags
+    while ($token !== false) {
+
     // test for the various tag states
-    
     // 1. open and closing tags on same line - no change
-    if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) : 
-      $indent=0;
-    // 2. closing tag - outdent now
-    elseif (preg_match('/^<\/\w/', $token, $matches)) :
-      $pad--;
-    // 3. opening tag - don't pad this one, only subsequent tags
-    elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
-      $indent=1;
-    // 4. no indentation needed
-    else :
-      $indent = 0; 
-    endif;
-    	
-    // pad the line with the required number of leading spaces
-    $line    = str_pad($token, strlen($token)+$pad, ' ', STR_PAD_LEFT);
-    $result .= $line . "\n"; // add to the cumulative result, with linefeed
-    $token   = strtok("\n"); // get the next token
-    $pad    += $indent; // update the pad size for subsequent lines    
+      if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) : 
+        $indent=0;
+        // 2. closing tag - outdent now
+      elseif (preg_match('/^<\/\w/', $token, $matches)) :
+        $pad--;
+        // 3. opening tag - don't pad this one, only subsequent tags
+      elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
+        $indent=1;
+        // 4. no indentation needed
+      else :
+        $indent = 0; 
+      endif;
+
+      // pad the line with the required number of leading spaces
+      $line    = str_pad($token, strlen($token)+$pad, ' ', STR_PAD_LEFT);
+      $result .= $line . "\n"; // add to the cumulative result, with linefeed
+      $token   = strtok("\n"); // get the next token
+      $pad    += $indent; // update the pad size for subsequent lines    
   }
- 
   return $result;
+}
+
 
 }
-//}else{
-//echo "Send message failed: " . $send[0] . $send[1]."<br /><a href='http://intranet.mindspring.co.za/?'>Take me home</a>'";
-//unset($value);
-
-}
- ?> 
+?> 
 </body>
 </html> 
 
