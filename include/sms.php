@@ -61,12 +61,12 @@ $myname=$_SESSION['username'];
 //     exit;
 // }
 
-var_dump($myname);
+// var_dump($myname);
 
 $sql = sql::sql_run('SELECT `Name`, `Number` FROM msi_sms_users ORDER BY `Name`');
 $whoami = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
 
-var_dump($sql);
+var_dump(count($sql));
 
 var_dump($whoami);
   	// if(is_array($results)){
@@ -77,8 +77,7 @@ $hereiam=mysqli_fetch_row($whoami);
 $myname=$hereiam[0];
 //if ($myname=='') {die('You are not logged in! <a href="index.php">Back to the Intranet</a>');}
 $from=$hereiam[1];
-echo "<u> Hello $myname 
- please select your recipients:</u><br />";
+echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 ?>
 <p style="font-size:smaller">
   <i>Every checked recipient will get a copy, if the custom field is set a copy will be sent to this number as well. <br />
@@ -87,9 +86,11 @@ echo "<u> Hello $myname
 
 <form name="mainform" action="include/sms.php" target="_self" method="post">
 <?php
-	$count=mysqli_num_rows($sql);
+
+  // $count=mysqli_num_rows($sql);
 	$halfcount=round($count/2); 
-echo '<table>';	
+
+  echo '<table>';	
 	for ( $i=1; $i<=$count; $i++) {
 		$row=mysqli_fetch_row($sql);
 	        $replnum=substr_replace ($row[1],'0', 0, 2);
