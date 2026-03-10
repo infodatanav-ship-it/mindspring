@@ -51,23 +51,18 @@ $myname=$_SESSION['username'];
 	
 	
 	
-	 $link = mysqli_connect("intranetvm.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
+//  $link = mysqli_connect("intranetvm.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
 		
-if (!$link) {
-    echo "Error: Unable to connect to MySQL." . PHP_EOL;
-    echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
-    echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
-    exit;
-}
+// if (!$link) {
+//     echo "Error: Unable to connect to MySQL." . PHP_EOL;
+//     echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
+//     echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
+//     exit;
+// }
 
-	
-	
-	
-	
-	
 $sql=mysqli_query($link,'SELECT `Name`, `Number` FROM msi_sms_users ORDER BY `Name`');
-
 $whoami=mysqli_query($link,'SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
+
 $hereiam=mysqli_fetch_row($whoami);
 $myname=$hereiam[0];
 //if ($myname=='') {die('You are not logged in! <a href="index.php">Back to the Intranet</a>');}
