@@ -75,11 +75,11 @@ $hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi
 
 // $hereiam=mysqli_fetch_row($whoami);
 
-var_dump($hereiam);
+// var_dump($hereiam);
 
 $myname=$hereiam[0]['Name'];
 
-$from=$hereiam[1];
+$from=$hereiam[0]['Number'];
 echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 ?>
 <p style="font-size:smaller">
@@ -98,6 +98,8 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 
   $i = 0;
   foreach ($results as $row) {
+
+  
     $replnum=substr_replace ($row[1],'0', 0, 2);
     $replnum=substr($replnum, 0, 3)." ".substr($replnum, 3, 3)." ".substr($replnum, 6, 4);
 
@@ -144,7 +146,7 @@ $user = "mindspring";
 $password = "jifejare";
 //$api_id = "3206492";
 //$baseurl ="http://www.mymobileapi.com";
-$from= $hereiam[1];
+$from= $hereiam[0]['Number'];
 foreach($_POST['recipient'] as $value){
 	
 $data= array(
