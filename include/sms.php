@@ -1,46 +1,11 @@
 <?php
 session_start();
 require_once('sql.php.inc');
-// AJAX handler: process POSTed SMS without redirect and return JSON
-if (isset($_GET['ajax']) && isset($_POST['send'])) {
-  $myname = isset($_SESSION['username']) ? $_SESSION['username'] : '';
-  $hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
-  $from = isset($hereiam[0]['Number']) ? $hereiam[0]['Number'] : '';
-  $message = isset($_POST['message']) ? $_POST['message'] : '';
-  $user = "mindspring";
-  $password = "jifejare";
-  $results = array();
-  if (!empty($_POST['recipient']) && is_array($_POST['recipient'])) {
-    foreach ($_POST['recipient'] as $value) {
-      $data = array(
-        "Type" => "sendparam",
-        "Username" => $user,
-        "Password" => $password,
-        "live" => "true",
-        "numto" => $value,
-        "data1" => $message
-      );
-      $post = http_build_query($data);
-      try {
-        $resp = do_post_request('https://www.mymobileapi.com/api5/http5.aspx', $post);
-      } catch (Exception $e) {
-        $resp = 'error: ' . $e->getMessage();
-      }
-      $results[] = array('to' => $value, 'response' => $resp);
-    }
-  }
-  header('Content-Type: application/json');
-  echo json_encode(array('status' => 'ok', 'results' => $results));
-  exit;
-}
 ?>
 <html>
 <head>
 <title>Mindspring SMS Portal</title>
 <meta name='author' value='Marius Pese' />
-<!-- Favicon: prefer /favicon.ico, fallback to small embedded PNG -->
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=">
 <SCRIPT LANGUAGE="JavaScript">
 <!-- Original:  Ronnie T. Moore -->
 <!-- Web Site:  The JavaScript Source -->
@@ -75,55 +40,6 @@ chk[i].checked = false ;
 </script>
 
 </head>
-<style>
-/* Minimal modal styles */
-#smsModal {display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.4);} 
-#smsModal .modal-content {background-color:#fefefe; margin:15% auto; padding:20px; border:1px solid #888; width:320px; border-radius:6px;}
-#smsModal .close {color:#aaa; float:right; font-size:20px; font-weight:bold; cursor:pointer;}
-</style>
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-  var form = document.forms['mainform'];
-  if(!form) return;
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var fm = new FormData(form);
-    fetch(form.action + '?ajax=1', {
-      method: 'POST',
-      body: fm,
-      credentials: 'same-origin'
-    }).then(function(resp){
-      return resp.json();
-    }).then(function(data){
-      var modal = document.getElementById('smsModal');
-      var msg = document.getElementById('smsModalMessage');
-      if(data && data.status === 'ok'){
-        var html = '<p>Message sent successfully.</p>';
-        if(data.results && data.results.length){
-          html += '<p>Sent to:</p><ul>' + data.results.map(function(r){ return '<li>'+ (r.to || '') +'</li>'; }).join('') + '</ul>';
-        }
-        msg.innerHTML = html;
-      } else {
-        msg.innerHTML = '<p>Send failed.</p>' + (data.error? '<p>'+data.error+'</p>':'');
-      }
-      modal.style.display = 'block';
-    }).catch(function(err){
-      var modal = document.getElementById('smsModal');
-      var msg = document.getElementById('smsModalMessage');
-      msg.innerHTML = '<p>Unexpected error sending message.</p>';
-      modal.style.display = 'block';
-    });
-  });
-  // close behavior
-  document.addEventListener('click', function(e){
-    var modal = document.getElementById('smsModal');
-    if(!modal) return;
-    if(e.target.classList.contains('close') || e.target === modal){
-      modal.style.display = 'none';
-    }
-  });
-});
-</script>
 <body>
 <br />
 <?php
@@ -146,6 +62,9 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 <form name="mainform" action="include/sms.php" target="_self" method="post">
 <?php
 
+  // $count=mysqli_num_rows($sql);
+	// $halfcount=round($count/2); 
+
   echo '<table>';
   // $i = 0;
   foreach ($sql as $row) {
@@ -155,19 +74,19 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 
     echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number'] . "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td></tr>";
 
+    // if($i%2) {//odd
+      // echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number']; "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td>";
+    // }else{//even
+      // echo "<td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td></tr>";
+    // }
+    // $i++;
+  }
+
 ?>
 </table>
 	
 <input type='text' name='recipient[]' value=''> Custom number<br /><br />
-<textarea 
-  name=message 
-  wrap=physical 
-  cols=50 
-  rows=4 
-  onKeyDown='textCounter(this.form.message,this.form.remLen,160);' 
-  onKeyUp='textCounter(this.form.message,this.form.remLen,160);' 
-  onfocus='if(this.value==this.defaultValue){this.value='';}' 
-  onblur='if(this.value==''){this.value=this.defaultValue;}'>Please enter your message here</textarea>
+<textarea name=message wrap=physical cols=50 rows=4 onKeyDown='textCounter(this.form.message,this.form.remLen,160);' onKeyUp='textCounter(this.form.message,this.form.remLen,160);' onfocus='if(this.value==this.defaultValue){this.value='';}' onblur='if(this.value==''){this.value=this.defaultValue;}'>Please enter your message here</textarea>
 <br>
 <input readonly type=text name=remLen size=3 maxlength=3 value='160'> characters left</font>
 <br />
@@ -305,14 +224,7 @@ function formatXmlString($xml)
 
 }
  ?> 
-<!-- Modal markup for AJAX result -->
-<div id="smsModal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div id="smsModalMessage">Sending...</div>
-  </div>
-</div>
 </body>
-</html>
+</html> 
 
 
