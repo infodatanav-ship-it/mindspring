@@ -96,9 +96,6 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
   // $i = 0;
   foreach ($sql as $row) {
 
-
-
-
     $replnum=substr_replace ($row['Number'],'0', 0, 2);
     $replnum=substr($replnum, 0, 3)." ".substr($replnum, 3, 3)." ".substr($replnum, 6, 4);
 
