@@ -84,7 +84,8 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
   echo '<table>';
 
 
-  $i = 0;
+  var_dump( "start table" );
+  // $i = 0;
   foreach ($sql as $row) {
 
 
@@ -93,12 +94,14 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
     $replnum=substr_replace ($row['Number'],'0', 0, 2);
     $replnum=substr($replnum, 0, 3)." ".substr($replnum, 3, 3)." ".substr($replnum, 6, 4);
 
-    if($i%2) {//odd
-      echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number']; "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td>";
-    }else{//even
-      echo "<td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td></tr>";
-    }
-    $i++;
+    echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number']; "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td>";
+
+    // if($i%2) {//odd
+      // echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row['Number']; "' />" . $row['Name'].' ('.$replnum.')' . "</td><td width='30px'></td>";
+    // }else{//even
+      // echo "<td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td></tr>";
+    // }
+    // $i++;
   }
 
 ?>
