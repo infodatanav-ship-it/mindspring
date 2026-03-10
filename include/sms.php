@@ -64,10 +64,10 @@ $myname=$_SESSION['username'];
 // var_dump($myname);
 
 $sql = sql::sql_run('SELECT `Name`, `Number` FROM msi_sms_users ORDER BY `Name`');
-$$hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
+$hereiam = sql::sql_run('SELECT `Name`, `Number` FROM `msi_sms_users` WHERE `msi_sms_users`.`Name` LIKE "'.$myname.'"');
 
-var_dump(count($sql));
-$count = count($sql);
+// var_dump(count($sql));
+// $count = count($sql);
 
 // $$hereiam = $whoami;
 // if(is_array($results)){
@@ -93,20 +93,20 @@ echo "<u> Hello " . $myname . ", please select your recipients:</u><br />";
 
   echo '<table>';
 
-  if(is_array($results)){
-    $i = 0;
-	  foreach ($results as $row) {
-      $replnum=substr_replace ($row[1],'0', 0, 2);
-      $replnum=substr($replnum, 0, 3)." ".substr($replnum, 3, 3)." ".substr($replnum, 6, 4);
 
-      if($i%2) {//odd
-        echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td><td width='30px'></td>";
-      }else{//even
-        echo "<td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td></tr>";
-      }
-      $i++;
+  $i = 0;
+  foreach ($results as $row) {
+    $replnum=substr_replace ($row[1],'0', 0, 2);
+    $replnum=substr($replnum, 0, 3)." ".substr($replnum, 3, 3)." ".substr($replnum, 6, 4);
+
+    if($i%2) {//odd
+      echo "<tr><td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td><td width='30px'></td>";
+    }else{//even
+      echo "<td><input type='checkbox' name='recipient[]' value='" . $row[1]; "' />" . $row[0].' ('.$replnum.')' . "</td></tr>";
     }
+    $i++;
   }
+
 ?>
 </table>
 	
