@@ -113,30 +113,18 @@ $(document).ready(function() {
 
 			console.log('Report sent to: ' + emailAddress + ' with send type: ' + sendTypeValue);
 
-			$.ajax({
-				url: './include/weekly_email_v2.php', // Replace with your API endpoint
-				type: 'POST',
-				data: { emailaddr: emailAddress, send_type: sendTypeValue },
-				beforeSend: function() {
-					var $btn = $('#send-this-report');
-					$btn.prop('disabled', true);
-					$btn.data('orig-html', $btn.html());
-					$btn.html('<svg width="16" height="16" viewBox="0 0 50 50" style="vertical-align:middle;margin-right:6px;" xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="25" r="20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="31.4 31.4"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.8s" repeatCount="indefinite" /></circle></svg> Sending...');
-				},
-				success: function(response) {
-					console.log('Response:', response);
-					$('.modal-overlay, .modal').css('display', 'none'); // Close modal
-				},
-				error: function() {
-					alert('Error sending report');
-				},
-				complete: function() {
-					var $btn = $('#send-this-report');
-					$btn.prop('disabled', false);
-					var orig = $btn.data('orig-html');
-					if (orig !== undefined) $btn.html(orig);
-				}
-			});
+			// $.ajax({
+			// 	url: './include/weekly_email_v2.php', // Replace with your API endpoint
+			// 	type: 'POST',
+			// 	data: { emailaddr: emailAddress, send_type: sendTypeValue },
+			// 	success: function(response) {
+			// 		console.log('Response:', response);
+			// 		$('.modal-overlay, .modal').css('display', 'none'); // Close modal
+			// 	},
+			// 	error: function() {
+			// 		alert('Error sending report');
+			// 	}
+			// });
 
 		}
 
