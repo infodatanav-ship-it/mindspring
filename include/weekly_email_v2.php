@@ -217,7 +217,7 @@ function weekly_format_mail4($client = '', $inputArr) {
 								AND msi_billing.date <= '$lastday'
 								AND msi_billing.type = 'Contract'
 								AND msi_billing.client = \"$results[1]\"
-								GROUP BY msi_billing.client"
+								GROUP BY msi_billing.client";
 
 
 							$uses = sql::sql_run($uses_sql);
