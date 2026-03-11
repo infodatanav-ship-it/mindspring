@@ -166,15 +166,15 @@ $(document).ready(function() {
 				url: './include/weekly_email_v2.php', // Replace with your API endpoint
 				type: 'POST',
 				data: { emailaddr: emailAddress, send_type: sendTypeValue },
-					beforeSend: beforeSend,
-					success: function(response) {
-						console.log('Response:', response);
-						$('.modal-overlay, .modal').css('display', 'none'); // Close modal
-					},
-					error: function() {
-						alert('Error sending report');
-					},
-					complete: afterComplete
+				beforeSend: beforeSend,
+				success: function(response) {
+					console.log('Response:', response);
+					$('.modal-overlay, .modal').css('display', 'none'); // Close modal
+				},
+				error: function() {
+					alert('Error sending report');
+				},
+				complete: afterComplete
 			});
 
 		}

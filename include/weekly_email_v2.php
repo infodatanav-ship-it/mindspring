@@ -1,5 +1,7 @@
 <?php
 require_once 'sql_queries.php';
+require_once 'sql.php.inc';
+
 error_reporting (E_ALL ^ E_NOTICE);
 
 if ( !isset($_POST['emailaddr']) || !empty($_POST['emailaddr']) ) {
@@ -18,55 +20,56 @@ $input['sending'] = true;
 
 weekly_format_mail4($name["company"], $input);
 
-function sql_run4($query) {
+// function sql_run4($query) {
 
-	$current = 'prod';
+// 	$current = 'prod';
 
-	$env = ['dev' => 'dev', 'prod' => 'prod'];
+// 	$env = ['dev' => 'dev', 'prod' => 'prod'];
 
-	// $link = mysqli_connect("intranetvm.mindspring.local", "supportnew", "466c8YdaFCwpAWmd","msi");//
-	// $link = mysqli_connect("localhost", "admin", "qjXq9sQmRKez98jB","msi");
-	// $link = mysqli_connect("intranetvm.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
+// 	// $link = mysqli_connect("intranetvm.mindspring.local", "supportnew", "466c8YdaFCwpAWmd","msi");//
+// 	// $link = mysqli_connect("localhost", "admin", "qjXq9sQmRKez98jB","msi");
+// 	// $link = mysqli_connect("intranetvm.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
 
 
-	if ( $env['dev'] == $current ) {
-		// dev
-		$link = mysqli_connect("devintranet.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
-	} else {
-		// prod
-		$link = mysqli_connect("intranetvm.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
-	}
+// 	if ( $env['dev'] == $current ) {
+// 		// dev
+// 		$link = mysqli_connect("devintranet.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
+// 	} else {
+// 		// prod
+// 		$link = mysqli_connect("intranetvm.mindspring.local", "msi_user", "hag!hd3@1zfa","msi");
+// 	}
 
-	// $link = mysqli_connect("intranetvm.mindspring.local", "devpc_user", "yougetwhatyougetanyoudontgetupset","msi");
+// 	// $link = mysqli_connect("intranetvm.mindspring.local", "devpc_user", "yougetwhatyougetanyoudontgetupset","msi");
 
-	// production
+// 	// production
 
-	if (!$link) {
-		echo "Error: Unable to connect to MySQL." . PHP_EOL;
-		echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
-		echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
-		exit;
-	}
+// 	if (!$link) {
+// 		echo "Error: Unable to connect to MySQL." . PHP_EOL;
+// 		echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
+// 		echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
+// 		exit;
+// 	}
 
-	$result = mysqli_query($link,$query) or die("Query failed : " . mysqli_error($link));
-	$values = [];
+// 	$result = mysqli_query($link,$query) or die("Query failed : " . mysqli_error($link));
+// 	$values = [];
 
-	if(stristr($query,'INSERT')== false && stristr($query,'DELETE')==false && stristr($query,'UPDATE')== false)
-	{
-		while ($fields = mysqli_fetch_array($result)){
-			$values[] = $fields;
-		}
-		mysqli_free_result($result);
-	}
-	mysqli_close($link);
-	return $values;
-}
+// 	if(stristr($query,'INSERT')== false && stristr($query,'DELETE')==false && stristr($query,'UPDATE')== false)
+// 	{
+// 		while ($fields = mysqli_fetch_array($result)){
+// 			$values[] = $fields;
+// 		}
+// 		mysqli_free_result($result);
+// 	}
+// 	mysqli_close($link);
+// 	return $values;
+// }
 
 function additional_emails ($send_type) {
 
 	if ( $send_type == 'normal' ) {
 		// $cc_emails_sql = sql_queries::getWeeklyCCEmails();
-		// $cc_emails = sql_run4($cc_emails_sql);
+		// $cc_emails = sql::sql_run($cc_emails_sql);
+		
 		// return $cc_emails[0]['settingvalue'];
 		return 'techieshours@mindspring.co.za';
 	} elseif ( $send_type == 'testcc' ) {
@@ -80,7 +83,7 @@ function bccEmailHeader ($send_type) {
 
 	if ( $send_type == 'normal' ) {
 		$bcc_emails_sql = sql_queries::getWeeklyBccEmails();
-		$bcc_emails = sql_run4($bcc_emails_sql);
+		$bcc_emails = sql::sql_run($bcc_emails_sql);
 		return $bcc_emails[0]['settingvalue'];
 	} else {
 		return "";
@@ -121,7 +124,8 @@ function weekly_format_mail4($client = '', $inputArr) {
 	// doLogging("CC-String: " . additional_emails($send_type));
 
 	// get all the techies
-	$techies = sql_run4($get_techies);
+
+	$techies = sql::sql_run($get_techies);
 
 
 	// convert object to string
@@ -186,7 +190,7 @@ function weekly_format_mail4($client = '', $inputArr) {
 				$statement = sql_queries::getCompanyContractHours($pritechie);
 
 				// This list all clients with of the primary techie
-				$resultsX = sql_run4($statement);
+				$resultsX = sql::sql_run($statement);
 
 				$contNow = true;
 
@@ -207,19 +211,22 @@ function weekly_format_mail4($client = '', $inputArr) {
 								$t++;
 							}
 
-							$uses = sql_run4("SELECT ifnull(sum(msi_billing.bill_hrs),0)
+							$uses_sql = "SELECT ifnull(sum(msi_billing.bill_hrs),0)
 								FROM msi_billing
 								WHERE  msi_billing.date >= '$results[3]'
 								AND msi_billing.date <= '$lastday'
 								AND msi_billing.type = 'Contract'
 								AND msi_billing.client = \"$results[1]\"
-								GROUP BY msi_billing.client");
+								GROUP BY msi_billing.client"
+
+
+							$uses = sql::sql_run($uses_sql);
 
 							$borrowedhours = "SELECT ifnull(msi_close_off.borrowed,0)as borrowed
 							FROM msi_close_off
 							WHERE msi_close_off.client = '".$results[1]."' AND msi_close_off.closingmonth >= '".$fulldate."'";
 
-							$bhours = sql_run4($borrowedhours);
+							$bhours = sql::sql_run($borrowedhours);
 
 							if(is_array($bhours )){
 								foreach($bhours as $bhours){
@@ -249,7 +256,7 @@ function weekly_format_mail4($client = '', $inputArr) {
 								$used = 0;
 							}
 
-							$inv_borrs = sql_run4("SELECT
+							$inv_borrs = sql::sql_run("SELECT
 								ifnull(sum(msi_close_off.invoiced),0),
 								ifnull(sum(msi_close_off.writeoff),0)
 								from msi_close_off
@@ -279,7 +286,7 @@ function weekly_format_mail4($client = '', $inputArr) {
 							}
 
 							$servname = "SELECT msi_users.mail from msi_users where username = '".$techie["primarytech"]."'";
-							$stechies = sql_run4($servname);
+							$stechies = sql::sql_run($servname);
 
 							if(is_array($stechies)){
 								foreach ($stechies as $stechie)	{
@@ -297,7 +304,7 @@ function weekly_format_mail4($client = '', $inputArr) {
 								and msi_billing.date >= '".$fulldate2."'
 								and msi_billing.type = 'Contract'";
 
-							$tothours = sql_run4($hours);
+							$tothours = sql::sql_run($hours);
 
 							if(is_array($tothours)){
 								foreach ($tothours as $thours){
@@ -343,7 +350,7 @@ function weekly_format_mail4($client = '', $inputArr) {
 							// AND msi_billing.techie = ".$tech_id." 
 							// var_dump("Total Calculation SQL: " . $totalCalculationSQL);
 
-							$totalCalculation = sql_run4($totalCalculationSQL);
+							$totalCalculation = sql::sql_run($totalCalculationSQL);
 
 							//<td class=\'client\'>'.$effective.' </td>
 							// <td class=\'client\'>'.$tocover.' </td>
@@ -396,8 +403,8 @@ function weekly_format_mail4($client = '', $inputArr) {
 						$to = '';
 
 						$techieSQL = "SELECT msi_users.mail from msi_users where username = '".$pritechie."'";
-						$techieEmail = sql_run4($techieSQL);
 
+						$techieEmail = sql::sql_run($techieSQL);
 						$ptechieMail = $techieEmail[0]['mail'];
 
 						if ( $ptechieMail === null || strlen($ptechieMail) == 0 ){
@@ -574,7 +581,7 @@ function daily_format_mail4($client){
 	And msi_clients.customer = 1";
 
 
-	$techies = sql_run4($get_techies);
+	$techies = sql::sql_run($get_techies);
 
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
@@ -597,7 +604,7 @@ function daily_format_mail4($client){
 		<td style='border-left: 1px solid #FFFFFF'> <b> Hours to cover daily </b></td>
 		</tr>";
 
-		$results = sql_run4("SELECT
+		$results = sql::sql_run("SELECT
 			msi_clients.company,
 			msi_contract.client,
 			msi_contract.hours,
@@ -658,7 +665,7 @@ function daily_format_mail4($client){
 					and msi_close_off.closingmonth >= '".$fulldate."'
 					";
 
-				$bhours = sql_run4("select ifnull(msi_close_off.borrowed,0)as borrowed
+				$bhours = sql::sql_run("select ifnull(msi_close_off.borrowed,0)as borrowed
 					from msi_close_off
 					where msi_close_off.client = '".$results[1]."'
 					and msi_close_off.closingmonth >= '".$fulldate."'
@@ -672,7 +679,7 @@ function daily_format_mail4($client){
 					$nowborrowed = 0;
 				}
 
-				$used = sql_run4("SELECT ifnull(sum(msi_billing.bill_hrs),0)
+				$used = sql::sql_run("SELECT ifnull(sum(msi_billing.bill_hrs),0)
 					FROM msi_billing
 					WHERE  msi_billing.date >= '$results[3]'
 					AND msi_billing.date <= '$lastday'
@@ -696,7 +703,7 @@ function daily_format_mail4($client){
 					$used = $used[0];
 				}
 
-				$inv_borr = sql_run4("SELECT
+				$inv_borr = sql::sql_run("SELECT
 					ifnull(sum(msi_close_off.invoiced),0),
 					ifnull(sum(msi_close_off.writeoff),0)
 					from msi_close_off
@@ -720,7 +727,7 @@ function daily_format_mail4($client){
 
 				$techname = "Select msi_users.mail from msi_users where username = '".$pritechie."'";
 
-				$techie = sql_run4($techname);
+				$techie = sql::sql_run($techname);
 
 				if(is_array($techie)){
 
@@ -731,7 +738,7 @@ function daily_format_mail4($client){
 
 				$servname = "Select msi_users.mail from msi_users where username = '".$servtechie."'";
 
-				$stechie = sql_run4($servname);
+				$stechie = sql::sql_run($servname);
 
 				var_dump($stechie);
 
@@ -756,7 +763,7 @@ function daily_format_mail4($client){
 				and msi_billing.type = '".$contract."'
 				";
 
-				$tothours = sql_run4($hours);
+				$tothours = sql::sql_run($hours);
 
 				foreach ($tothours as $thours){
 					$tot = $thours[0];
@@ -888,7 +895,8 @@ class weekly_email_v2 {
 				return "pramod@mindspring.co.za;celento@mindspring.co.za";
 			} else {
 				$cc_emails_sql = "SELECT * FROM msi_settings where `settingname` = 'weekly_cc_emails';";
-				$cc_emails = sql_run4($cc_emails_sql);
+				$cc_emails = sql::sql_run($cc_emails_sql);
+				
 				// var_dump($cc_emails[0]['settingvalue']);
 				return $cc_emails[0]['settingvalue'];
 			}
@@ -900,7 +908,7 @@ class weekly_email_v2 {
 			return "";
 		} else {
 			$bcc_emails_sql = "SELECT * FROM msi_settings where `settingname` = 'weekly_bcc_emails';";
-			$bcc_emails = sql_run4($bcc_emails_sql);
+			$bcc_emails = sql::sql_run($bcc_emails_sql);
 			return "Bcc: " . $bcc_emails[0]['settingvalue'] . "\r\n";;
 		}
 	}
