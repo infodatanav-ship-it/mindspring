@@ -1,5 +1,54 @@
 $(document).ready(function() {
 
+	// Helper: show inline SVG spinner on a button and disable it
+	function showSpinnerOnButton($btn) {
+		$btn.prop('disabled', true);
+		$btn.data('orig-html', $btn.html());
+		var svgNS = 'http://www.w3.org/2000/svg';
+		var svg = document.createElementNS(svgNS, 'svg');
+		svg.setAttribute('width', '16');
+		svg.setAttribute('height', '16');
+		svg.setAttribute('viewBox', '0 0 50 50');
+		svg.style.verticalAlign = 'middle';
+		svg.style.marginRight = '6px';
+		var circle = document.createElementNS(svgNS, 'circle');
+		circle.setAttribute('cx', '25');
+		circle.setAttribute('cy', '25');
+		circle.setAttribute('r', '20');
+		circle.setAttribute('fill', 'none');
+		circle.setAttribute('stroke', '#fff');
+		circle.setAttribute('stroke-width', '4');
+		circle.setAttribute('stroke-linecap', 'round');
+		circle.setAttribute('stroke-dasharray', '31.4 31.4');
+		var anim = document.createElementNS(svgNS, 'animateTransform');
+		anim.setAttribute('attributeName', 'transform');
+		anim.setAttribute('type', 'rotate');
+		anim.setAttribute('from', '0 25 25');
+		anim.setAttribute('to', '360 25 25');
+		anim.setAttribute('dur', '0.8s');
+		anim.setAttribute('repeatCount', 'indefinite');
+		circle.appendChild(anim);
+		svg.appendChild(circle);
+		$btn.empty().append(svg).append(document.createTextNode(' Sending...'));
+	}
+
+	// Helper: restore button to original state
+	function restoreButton($btn) {
+		$btn.prop('disabled', false);
+		var orig = $btn.data('orig-html');
+		if (orig !== undefined) $btn.html(orig);
+	}
+
+	// Wrapper functions used directly by jQuery AJAX
+	function beforeSend() {
+		showSpinnerOnButton($('#send-this-report'));
+	}
+
+	function afterComplete() {
+		restoreButton($('#send-this-report'));
+	}
+
+
 	$('input[name="datefilter"]').daterangepicker({
 		autoUpdateInput: false,
 		locale: {
@@ -113,18 +162,20 @@ $(document).ready(function() {
 
 			console.log('Report sent to: ' + emailAddress + ' with send type: ' + sendTypeValue);
 
-			// $.ajax({
-			// 	url: './include/weekly_email_v2.php', // Replace with your API endpoint
-			// 	type: 'POST',
-			// 	data: { emailaddr: emailAddress, send_type: sendTypeValue },
-			// 	success: function(response) {
-			// 		console.log('Response:', response);
-			// 		$('.modal-overlay, .modal').css('display', 'none'); // Close modal
-			// 	},
-			// 	error: function() {
-			// 		alert('Error sending report');
-			// 	}
-			// });
+			$.ajax({
+				url: './include/weekly_email_v2.php', // Replace with your API endpoint
+				type: 'POST',
+				data: { emailaddr: emailAddress, send_type: sendTypeValue },
+					beforeSend: beforeSend,
+					success: function(response) {
+						console.log('Response:', response);
+						$('.modal-overlay, .modal').css('display', 'none'); // Close modal
+					},
+					error: function() {
+						alert('Error sending report');
+					},
+					complete: afterComplete
+			});
 
 		}
 
