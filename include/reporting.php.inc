@@ -243,10 +243,10 @@ class billing_reports {
 
 				$lineTot = $lineTAHB + $lineTCB + $lineTMB + $lineTPB;
 
-				$techieLink = "<a href ='?module=billing_reports&action=techie_billing&year=$year&month=$month&techie=$result[0]'>".ucfirst($result[0])."</a>";
+				<a href ='?module=billing_reports&action=techie_billing&year=$year&month=$month&techie=$result[1]'>".ucfirst($result[1])."</a>
 
 				print "<tr>" .
-				"<td class=\"client\">" . $techieLink . "</td>" . 
+				"<td class=\"client\">" . ucfirst($result[1]) . "</td>" . 
 				"<td class=\"client\">$lineTot</td>" .
 				$totalCHAHTML . 
 				$totalCBHTML .
