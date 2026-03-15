@@ -679,6 +679,7 @@ switch ($module) {
       	contract::maintenance($contract_month,$contract_year);
       }
        else if($action =='maintenance_termination'){
+        var_dump('maintenance termination');
        	contract::maintenance_termination($client,$hours,$identity,$year2,$month2,$year3,$month3,$termmonth,$termyear,$term,$primary,$backup,$server_hours,$server_techie,$m_type);
 	
        }
@@ -689,6 +690,7 @@ switch ($module) {
         contract::edit_form($id,$identity,$contract_month,$contract_year);
       }
       else if($action == 'termedit'){
+        var_dump('term edit');
         contract::terminatingedit_form($id,$identity,$contract_month,$contract_year);
        }
        else if($action == 'editmaintenance_form'){
