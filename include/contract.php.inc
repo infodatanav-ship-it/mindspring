@@ -4654,6 +4654,9 @@ function edit_form($id,$identity, $contract_month, $contract_year){
 
 
 function maintenance_termination($client,$hours,$identity,$year2,$month2,$year3,$month3,$termmonth,$termyear,$term,$primary,$backup,$server_hours,$server_techie,$m_type){
+
+	var_dump('maintenance_termination');
+
 	if(!acl::has_access($_SESSION['id'],"contracts","edit")) return 1;
 
 	$primary=$_POST['primary'];
