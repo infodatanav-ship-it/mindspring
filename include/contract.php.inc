@@ -1096,6 +1096,7 @@ function terminatingedit_form($id,$identity,$contract_month,$contract_year){
 	WHERE customer = \"1\"
 	GROUP BY `company`");
 
+	var_dump("---results---");
 	var_dump($results);
 
 	$results2 = sql::sql_run('SELECT
@@ -1139,6 +1140,7 @@ function terminatingedit_form($id,$identity,$contract_month,$contract_year){
 	and date_format( msi_contract.terminatingdate,"%Y-%m") and terminating="yes") )
 	');
 
+	var_dump("results2");
 	var_dump($results2);
 
 	$av = "SELECT ifnull(msi_close_off.available,0.00),ifnull(msi_close_off.unused,0.00)
