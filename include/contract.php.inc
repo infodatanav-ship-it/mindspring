@@ -337,7 +337,7 @@ print " <a href=?module=contract&action=editmaintenance_form&id=$id&identity=$id
 print '</td></tr>
 <tr><td valign=top>';
 
-print "<span class=\"head\">Cancell/Update Maintenance Contract Hours</span></td></tr></table>
+print "<span class=\"head\">Cancel/Update Maintenance Contract Hours</span></td></tr></table>
 
 
 <table class=\"box\">
@@ -4669,10 +4669,11 @@ function maintenance_termination($client,$hours,$identity,$year2,$month2,$year3,
 	$month2 = $_POST['month2'];
 	$month3 = $_POST['month3'];
 	$identity = $_GET['identity'];
-    $term =$_POST['term'];
-    $m_type =trim($_POST['m_type']);
-    $acc_manager =$_POST['acc_manager'];
+	$term =$_POST['term'];
+	$m_type =trim($_POST['m_type']);
+	$acc_manager =$_POST['acc_manager'];
 
+	var_dump($_POST);
 
 	if($term=='')
 	{
@@ -4723,93 +4724,91 @@ function maintenance_termination($client,$hours,$identity,$year2,$month2,$year3,
 	
 	if($startcdate=='' || $endcdate=='') {
 		echo '<font color="red"><b>ERROR: Start date or end date cant be null</b></font>';
-      return false;
-    }
-  
-if(!preg_match("/^[0-9]+(.[0-9]{2})?$/", $hours)) {
-echo '<font color="red"><b>ERROR: Contract hours is not valid</b></font>';
- return false;
-   }
- if(preg_match("/^[0-9]+(.[0-9]{2})?$/", $carried)) {
-//if(!preg_match('/^[0-9]+$/',$carried)) {
-      echo '<font color="red"><b>ERROR: Carried over hours is not valid</b></font>';
-      return false;
-      }
- if(preg_match("/^[0-9]+(.[0-9]{2})?$/", $borrowed)) {
- //if(!preg_match('/^[0-9]+$/',$carried)) {
-      echo '<font color="red"><b>ERROR: Borrowed hours is not valid</b></font>';
-      return false;
-    }
-     if($hours<1) {
-     echo '<font color="red"><b>ERROR:The number of hours per month are Invalid</b></font>';
-      return false;
-       }
-    if($hours>720) {
-      echo '<font color="red"><b>ERROR:The number of hours per month are Invalid</b></font>';
-      return false;
-       }
-     if($termdate<$startcdate and $term=='1') {
-       echo '<font color="red"><b>ERROR:Termination date cant be less than the contract start date</b></font>';
-         return false;
-      }
-      if($m_type=='') {
-      	echo '<font color="red"><b>ERROR:Type of maintenance can not be empty</b></font>';
-               return false;
-            }
-            
-      
-   /*// if($startcdate>$endcdate) {
-   //   echo '<font color="red"><b>ERROR: Start date cant be greater than end date</b></font>';
-   //   return false;
-       }
-  //   if($termdate<$endcdate and $term=='1') {
-  //     echo'<font color="red"><b>ERROR:Termination date cant be less than the contract end date</b></font>';
-  //    return false;
-  //    }
-    $currentdate=date("Y-m-d");
-    if($startcdate<$currentdate) {
-      echo '<font color="red"><b>ERROR: Start date cant be less than todays date</b></font>';
-      return false;
-}
-    */
- if($startcdate==''||$endcdate=='') {
-      echo' <font color="red"><b>ERROR:Neither Start date nor End date can be null</b></font>';
-      return false;
-    }
-        
-  $termdate=$termyear.'-'.'0'.$termmonth.'-'.$termday;
-//echo "select client from msi_mcontract where client = $client and contractid='$identity'";
-$ret_exists = sql::sql_run("select client from msi_mcontract where client = $client and contractid='$identity'");
-//echo $ret_exists."<br >";
-if(!$ret_exists){
-print("This is not a contract client please add the client first...");
-exit;
-}
-$ret_update = sql::sql_run("update msi_mcontract set 
-		client = $client,
-		hours = $hours,
-		startdate='$startcdate',
-		enddate='$endcdate',
-		terminatingdate='$termdate',
-		terminating='$terminate',
-		primarytech='$primary', 
-		backuptech='$backup', 
-		server_hours = '$server_hours',
-		server_techie = '$server_techie',
-		type_maintenance = '$m_type',
-                 acc_manager = '$acc_manager'
-		where client = $client and contractid='$identity'
- ");
+		return false;
+	}
 
-$getclientname=sql::sql_run("select company from msi_clients where id='$client'");
-$clientname=$getclientname[0][0];
-if(!isset($ret_update)){
-    print "<b>Updated details for $clientname</b><p>";
-    contract::maintenance(NULL,NULL);
-    } else {
-    
-      print "<b>Something went wrong !</b>";
-    }
+	if(!preg_match("/^[0-9]+(.[0-9]{2})?$/", $hours)) {
+		echo '<font color="red"><b>ERROR: Contract hours is not valid</b></font>';
+		return false;
+	}
+
+	if(preg_match("/^[0-9]+(.[0-9]{2})?$/", $carried)) {
+		//if(!preg_match('/^[0-9]+$/',$carried)) {
+		echo '<font color="red"><b>ERROR: Carried over hours is not valid</b></font>';
+		return false;
+	}
+
+	if(preg_match("/^[0-9]+(.[0-9]{2})?$/", $borrowed)) {
+		//if(!preg_match('/^[0-9]+$/',$carried)) {
+		echo '<font color="red"><b>ERROR: Borrowed hours is not valid</b></font>';
+		return false;
+	}
+
+	if($hours<1) {
+		echo '<font color="red"><b>ERROR:The number of hours per month are Invalid</b></font>';
+		return false;
+	}
+
+	if($hours>720) {
+		echo '<font color="red"><b>ERROR:The number of hours per month are Invalid</b></font>';
+		return false;
+	}
+
+	if($termdate<$startcdate and $term=='1') {
+		echo '<font color="red"><b>ERROR:Termination date cant be less than the contract start date</b></font>';
+		return false;
+	}
+
+	if($m_type=='') {
+		echo '<font color="red"><b>ERROR:Type of maintenance can not be empty</b></font>';
+		return false;
+	}
+
+
+	if($startcdate==''||$endcdate=='') {
+		echo' <font color="red"><b>ERROR:Neither Start date nor End date can be null</b></font>';
+		return false;
+	}
+
+	$termdate = $termyear.'-'.'0'.$termmonth.'-'.$termday;
+	//echo "select client from msi_mcontract where client = $client and contractid='$identity'";
+
+	$ret_exists = sql::sql_run("select client from msi_mcontract where client = $client and contractid='$identity'");
+	//echo $ret_exists."<br >";
+
+	if(!$ret_exists){
+		print("This is not a contract client please add the client first...");
+		exit;
+	}
+
+	$ret_update = sql::sql_run("UPDATE msi_mcontract SET 
+		`client` = $client,
+		`hours` = $hours,
+		`startdate` ='$startcdate',
+		`enddate` ='$endcdate',
+		`terminatingdate` ='$termdate',
+		`terminating` ='$terminate',
+		`primarytech` ='$primary', 
+		`backuptech` ='$backup', 
+		`server_hours` = '$server_hours',
+		`server_techie` = '$server_techie',
+		`type_maintenance` = '$m_type',
+		`acc_manager` = '$acc_manager'
+		WHERE `client` = $client AND `contractid`='$identity'
+	");
+
+	var_dump('-----ret_update-----');
+	var_dump($ret_update);
+
+	$getclientname=sql::sql_run("select company from msi_clients where id='$client'");
+	$clientname = $getclientname[0][0];
+
+	if(!isset($ret_update)){
+		print "<b>Updated details for $clientname</b><p>";
+		contract::maintenance(NULL,NULL);
+	} else {
+		print "<b>Something went wrong !</b>";
+	}
 }
 
 
