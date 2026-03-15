@@ -1145,9 +1145,12 @@ function terminatingedit_form($id,$identity,$contract_month,$contract_year){
 
 	$av = "SELECT ifnull(msi_close_off.available,0.00),ifnull(msi_close_off.unused,0.00)
 	from msi_close_off
-	where msi_close_off.client = \"$id\"
-	and  month(msi_close_off.closingmonth) = \"$prev_month\"
-	and year(msi_close_off.closingmonth)= \"$prev_year\"";
+	where msi_close_off.client = '" . $id . "'
+	and  month(msi_close_off.closingmonth) = " . $prev_month . "
+	and year(msi_close_off.closingmonth)= " . $prev_year . ";";
+
+	var_dump("---av---");
+	var_dump($av);
 
 	$avres = sql::sql_run($av);
 
