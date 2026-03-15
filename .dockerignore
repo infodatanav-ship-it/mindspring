@@ -1,0 +1,9 @@
+vendor
+node_modules
+.git
+.gitignore
+nbproject
+.idea
+docker-compose.override.yml
+tmp
+*.log

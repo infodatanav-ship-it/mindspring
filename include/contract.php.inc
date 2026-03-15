@@ -1142,7 +1142,7 @@ $expiryday 		= strftime('%d',$expirydate);
 	    and year(msi_close_off.closingmonth)= \"$prev_year\"";
 
 
- $avres =sql::sql_run($av);
+ $avres = sql::sql_run($av);
 
 // and  msi_contract.contid = "'.$identity.'"
  $identity = $results2[0][20];
@@ -1641,17 +1641,7 @@ if($leftprev < 0){$leftprev = 0;}
 ///////////////////////////////////////////////////////////////////////////////
 
 ?>
-<script type="text/javascript">
 
-	function limitTextOnKeyUpDown(limitField, limitCount, limitNum) {
-		if (limitField.value.length > limitNum) {
-			limitField.value = limitField.value.substring(0, limitNum);
-		} else {
-			limitCount.value = limitNum - limitField.value.length;
-		}
-	}
-
-</script>
 <?php 
 
 $results3=sql::sql_run("SELECT username FROM msi_users WHERE activetechie = 'yes' ORDER BY `username`");
@@ -2146,7 +2136,7 @@ msi_contract.acc_manager
  and date_format( msi_contract.terminatingdate,'%Y-%m') and terminating='yes') )
  order by $sort_column  " );
  
-  print "<span class=\"head\">Contract Admin</span>
+  print "<span class=\"head\">Contract Admin (X)</span>
   <p><b>Listing all active contracts. To cancell or update a contract click on the customer name</b></p>";
   print '<table><tr><td colspan="3" align="left">';
   print "<a href=?module=contractadmin&action=terminate&contract_year=$prev_year&contract_month=$prev_month style=\"color: #1A53FF\">". date(F, mktime(0, 0, 0, $prev_month, 1, $prev_year)) ." $prev_year << Previous</a> ";
@@ -5227,3 +5217,16 @@ function adhoc_clients(){
 
  
 ?>
+
+
+<script type="text/javascript">
+
+	function limitTextOnKeyUpDown(limitField, limitCount, limitNum) {
+		if (limitField.value.length > limitNum) {
+			limitField.value = limitField.value.substring(0, limitNum);
+		} else {
+			limitCount.value = limitNum - limitField.value.length;
+		}
+	}
+
+</script>
