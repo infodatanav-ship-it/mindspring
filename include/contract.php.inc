@@ -1097,7 +1097,7 @@ function terminatingedit_form($id,$identity,$contract_month,$contract_year){
 	GROUP BY `company`");
 
 	var_dump("---results---");
-	var_dump($results);
+	// var_dump($results);
 
 	$results2 = sql::sql_run('SELECT
 		msi_clients.company,
@@ -1122,7 +1122,7 @@ function terminatingedit_form($id,$identity,$contract_month,$contract_year){
 		ifnull(msi_contract.effective,0),
 		msi_contract.contid,
 		msi_contract.notes,
-			msi_contract.acc_manager,
+		msi_contract.acc_manager,
 		msi_contract.hours_notify
 		
 	FROM 
@@ -1140,7 +1140,7 @@ function terminatingedit_form($id,$identity,$contract_month,$contract_year){
 	and date_format( msi_contract.terminatingdate,"%Y-%m") and terminating="yes") )
 	');
 
-	var_dump("results2");
+	var_dump("---results2---");
 	var_dump($results2);
 
 	$av = "SELECT ifnull(msi_close_off.available,0.00),ifnull(msi_close_off.unused,0.00)
@@ -1150,6 +1150,9 @@ function terminatingedit_form($id,$identity,$contract_month,$contract_year){
 	and year(msi_close_off.closingmonth)= \"$prev_year\"";
 
 	$avres = sql::sql_run($av);
+
+	var_dump("---avres---");
+	var_dump($avres);
 
 	// and  msi_contract.contid = "'.$identity.'"
 	$identity = $results2[0][20];
