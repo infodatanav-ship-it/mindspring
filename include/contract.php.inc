@@ -1042,160 +1042,167 @@ if(!isset($ret_update)){
 	
 function terminatingedit_form($id,$identity,$contract_month,$contract_year){
 
-if(!isset($contract_month)&&!isset($contract_year))
-{
-$contract_year =$_GET['year'];
-$contract_month =$_GET['month'];
-}
+	var_dump("terminating edit form");
 
-  $next_month = $contract_month +1;
-  if ($next_month > 12) {
-          $next_month = 1;
-          $next_year = $contract_year +1;
-          }
-  else {
-          $next_year = $contract_year;
-  }
-  $prev_month = $contract_month - 1;
-  if ($prev_month == 0){
-          $prev_month = 12;
-          $prev_year= $contract_year -1;
-          }
-  else {
-    $prev_year= $contract_year;
-  }
+	if(!isset($contract_month)&&!isset($contract_year)) {
+		$contract_year =$_GET['year'];
+		$contract_month =$_GET['month'];
+	}
 
-//add leading 0 for months less than 10
-if($contract_month < 10){
-$strmonth = '0'.$contract_month;
-}else{
-$strmonth = $contract_month;
-}
+	$next_month = $contract_month +1;
+	if ($next_month > 12) {
+		$next_month = 1;
+		$next_year = $contract_year +1;
+	} else {
+		$next_year = $contract_year;
+	}
 
-//end add leading
-//$numdays=date("t", strtotime($contract_year . "-" .$strmonth . "-01"));
-$moncalc=$contract_year.'-'.$strmonth.'-'.'01';
-$fulldate=$contract_year.'-'.$strmonth;
-$fulldate2=$contract_year.'-'.$strmonth.'-'.'00';
+	$prev_month = $contract_month - 1;
 
-$months = array(1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December');
-$thisyear 		= date('Y');
-$thismonth 		= date('F');
-$thisday 		= date('j');
-$today 			= $thisday . " " . $thismonth . " " . $thisyear;
-$expirydate 	= strtotime("+ 10 days");
-$expiryyear 	= strftime('%Y',$expirydate);
-$expirymonth 	= strftime('%B',$expirydate);
-$expiryday 		= strftime('%d',$expirydate);
+	if ($prev_month == 0){
+		$prev_month = 12;
+		$prev_year= $contract_year -1;
+	} else {
+		$prev_year= $contract_year;
+	}
 
-  if(!acl::has_access($_SESSION['id'],"contracts","edit")) return 1;
+	//add leading 0 for months less than 10
+	if($contract_month < 10){
+		$strmonth = '0'.$contract_month;
+	}else{
+		$strmonth = $contract_month;
+	}
 
- $results = sql::sql_run("SELECT DISTINCT company, id
-    FROM `msi_clients`
-    WHERE customer = \"1\"
-    GROUP BY `company`");
- $results2 = sql::sql_run('SELECT
-	msi_clients.company,
-	msi_contract.client,
-	msi_contract.hours,
-	day(msi_contract.startdate),
-	monthname(msi_contract.startdate),
-	month(msi_contract.startdate),
-	year(msi_contract.startdate),
-	day(msi_contract.enddate),
-	month(msi_contract.enddate),
-	monthname(msi_contract.enddate),
-	year(msi_contract.enddate),
-	msi_contract.terminating,
-	msi_contract.terminatingdate,
-	month(msi_contract.terminatingdate),
-	year(msi_contract.terminatingdate),
-	msi_contract.primarytech,
-	msi_contract.backuptech,
-	msi_contract.server_hours,
-	msi_contract.server_techie,
- 	ifnull(msi_contract.effective,0),
- 	msi_contract.contid,
- 	msi_contract.notes,
-        msi_contract.acc_manager,
- 	msi_contract.hours_notify
-	
- FROM 
-	msi_contract, 
-	msi_clients 
- WHERE
-   	msi_clients.id = msi_contract.client
- AND
-	msi_contract.client = "'.$id.'" 
+	//end add leading
+	//$numdays=date("t", strtotime($contract_year . "-" .$strmonth . "-01"));
+	$moncalc=$contract_year.'-'.$strmonth.'-'.'01';
+	$fulldate=$contract_year.'-'.$strmonth;
+	$fulldate2=$contract_year.'-'.$strmonth.'-'.'00';
 
- and (("'.$fulldate.'" between date_format( msi_contract.startdate,"%Y-%m")
- and date_format( msi_contract.enddate,"%Y-%m")) or
- (msi_contract.terminating="no" and "'.$fulldate2.'">=date_format(msi_contract.startdate,"%Y-%m-00"))
- or ("'.$fulldate.'" between date_format( msi_contract.startdate,"%Y-%m")
- and date_format( msi_contract.terminatingdate,"%Y-%m") and terminating="yes") )
-');
+	$months = array(1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December');
+	$thisyear 		= date('Y');
+	$thismonth 		= date('F');
+	$thisday 		= date('j');
+	$today 			= $thisday . " " . $thismonth . " " . $thisyear;
+	$expirydate 	= strtotime("+ 10 days");
+	$expiryyear 	= strftime('%Y',$expirydate);
+	$expirymonth 	= strftime('%B',$expirydate);
+	$expiryday 		= strftime('%d',$expirydate);
 
- $av = "select ifnull(msi_close_off.available,0.00),ifnull(msi_close_off.unused,0.00)
-		from msi_close_off
-		where msi_close_off.client = \"$id\"
-		and  month(msi_close_off.closingmonth) = \"$prev_month\"
-	    and year(msi_close_off.closingmonth)= \"$prev_year\"";
+	if(!acl::has_access($_SESSION['id'],"contracts","edit")) return 1;
+
+	$results = sql::sql_run("SELECT DISTINCT company, id
+	FROM `msi_clients`
+	WHERE customer = \"1\"
+	GROUP BY `company`");
+
+	var_dump($results);
+
+	$results2 = sql::sql_run('SELECT
+		msi_clients.company,
+		msi_contract.client,
+		msi_contract.hours,
+		day(msi_contract.startdate),
+		monthname(msi_contract.startdate),
+		month(msi_contract.startdate),
+		year(msi_contract.startdate),
+		day(msi_contract.enddate),
+		month(msi_contract.enddate),
+		monthname(msi_contract.enddate),
+		year(msi_contract.enddate),
+		msi_contract.terminating,
+		msi_contract.terminatingdate,
+		month(msi_contract.terminatingdate),
+		year(msi_contract.terminatingdate),
+		msi_contract.primarytech,
+		msi_contract.backuptech,
+		msi_contract.server_hours,
+		msi_contract.server_techie,
+		ifnull(msi_contract.effective,0),
+		msi_contract.contid,
+		msi_contract.notes,
+			msi_contract.acc_manager,
+		msi_contract.hours_notify
+		
+	FROM 
+		msi_contract, 
+		msi_clients 
+	WHERE
+		msi_clients.id = msi_contract.client
+	AND
+		msi_contract.client = "'.$id.'" 
+
+	and (("'.$fulldate.'" between date_format( msi_contract.startdate,"%Y-%m")
+	and date_format( msi_contract.enddate,"%Y-%m")) or
+	(msi_contract.terminating="no" and "'.$fulldate2.'">=date_format(msi_contract.startdate,"%Y-%m-00"))
+	or ("'.$fulldate.'" between date_format( msi_contract.startdate,"%Y-%m")
+	and date_format( msi_contract.terminatingdate,"%Y-%m") and terminating="yes") )
+	');
+
+	var_dump($results2);
+
+	$av = "SELECT ifnull(msi_close_off.available,0.00),ifnull(msi_close_off.unused,0.00)
+	from msi_close_off
+	where msi_close_off.client = \"$id\"
+	and  month(msi_close_off.closingmonth) = \"$prev_month\"
+	and year(msi_close_off.closingmonth)= \"$prev_year\"";
+
+	$avres = sql::sql_run($av);
+
+	// and  msi_contract.contid = "'.$identity.'"
+	$identity = $results2[0][20];
+	//echo $identity;
 
 
- $avres = sql::sql_run($av);
+	$mm = $results2[0][5];
+	if($mm<10){
+		$mm = '0'.$mm;
+	} else {
+		$mm =$mm;
+	}
 
-// and  msi_contract.contid = "'.$identity.'"
- $identity = $results2[0][20];
-//echo $identity;
+	$strtdate = $results2[0][6]."-".$mm;
 
+	if ($strtdate == $fulldate){
+		//echo "start of contract : ".$avail
+		$avail =  $results2[0][19];
+		$prevunused = 0;
+	} else {
 
-$mm = $results2[0][5];
-if($mm<10){$mm = '0'.$mm;}
-else {$mm =$mm;}
-$strtdate = $results2[0][6]."-".$mm;
+		if(is_array($avres)) {
+			$avail = $avres[0][0];
+			$prevunused = $avres[0][1];
+		} else {
+			$prevunused = 0;
+			$avail = 0;
+		}
+	}
 
-if ($strtdate == $fulldate){
-	
-//echo "start of contract : ".$avail
-	$avail =  $results2[0][19];
-	$prevunused = 0;
-}
-else {
+	if ($avail < 0){
+		$avail = 0;
+	}
 
-	if(is_array($avres))
-     {  
- 	$avail = $avres[0][0];
- 	
- 	$prevunused = $avres[0][1];
-    }
-      else {$prevunused = 0;
-      $avail = 0;}
-}
-if ($avail < 0){
-	$avail = 0;
-}
+	$results4 = sql::sql_run("select ifnull(msi_close_off.carried,0),
+		ifnull(msi_close_off.borrowed,0),
+		ifnull(msi_close_off.extra,0),
+		ifnull(msi_close_off.invoiced,0),
+		sum(msi_billing.bill_hrs),
+		msi_contract.hours,
+		msi_contract.server_hours
+		from msi_billing,msi_contract,msi_close_off
+		where msi_billing.client = msi_contract.client
+		and msi_close_off.client = msi_billing.client
+		and  month(msi_close_off.closingmonth) = $contract_month 
+		and year(msi_close_off.closingmonth)= $contract_year
+		AND msi_billing.client = \"$id\"
 
-$results4 = sql::sql_run("select ifnull(msi_close_off.carried,0),
-                     ifnull(msi_close_off.borrowed,0),
-                     ifnull(msi_close_off.extra,0),
-                     ifnull(msi_close_off.invoiced,0),
-                     sum(msi_billing.bill_hrs),
-                     msi_contract.hours,
-                     msi_contract.server_hours
- from msi_billing,msi_contract,msi_close_off
- where msi_billing.client = msi_contract.client
- and msi_close_off.client = msi_billing.client
- and  month(msi_close_off.closingmonth) = $contract_month 
- and year(msi_close_off.closingmonth)= $contract_year
- AND msi_billing.client = \"$id\"
-
- and (('$fulldate' between date_format( msi_contract.startdate,'%Y-%m')
- and date_format( msi_contract.enddate,'%Y-%m')) or
- (msi_contract.terminating='no'and '$fulldate2'>=date_format(msi_contract.startdate,'%Y-%m-00'))
- or ('$fulldate' between date_format( msi_contract.startdate,'%Y-%m')
- and date_format( msi_contract.terminatingdate,'%Y-%m') and terminating='yes') )
- and upper(msi_billing.type) = 'CONTRACT' 
-  ");
+		and (('$fulldate' between date_format( msi_contract.startdate,'%Y-%m')
+		and date_format( msi_contract.enddate,'%Y-%m')) or
+		(msi_contract.terminating='no'and '$fulldate2'>=date_format(msi_contract.startdate,'%Y-%m-00'))
+		or ('$fulldate' between date_format( msi_contract.startdate,'%Y-%m')
+		and date_format( msi_contract.terminatingdate,'%Y-%m') and terminating='yes') )
+		and upper(msi_billing.type) = 'CONTRACT' 
+		");
 
 $available = $results2[0][19];
 //echo $available."<br />";
